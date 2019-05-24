@@ -20,7 +20,8 @@
     "react-swipeable-views": "0.13.1",
     "react": "^16.8.6",
     "react-day-picker": "^7.3.0",
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "node-sass": "^4.11.0"
   },
   "devDependencies": {
     "@babel/cli": "7.2.3",
