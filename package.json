@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://git.heroku.com/reactproject3.git"
+    "url": "git+https://git.heroku.com/wishmaker.git"
   },
   "engines": {
     "node": "10.15.1"
