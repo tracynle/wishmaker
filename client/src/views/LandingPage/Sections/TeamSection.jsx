@@ -6,19 +6,32 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // @material-ui/icons
 
+// import GridContainer from "../../../components/Grid/GridContainer.jsx";
+// import GridItem from "../../../components/Grid/GridItem.jsx";
+// import Button from "../../../components/CustomButtons/Button.jsx";
+// import Card from "../../../components/Card/Card.jsx";
+// import CardBody from "../../../components/Card/CardBody.jsx";
+// import CardFooter from "../../../components/Card/CardFooter.jsx";
+
+// import teamStyle from "../../../assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
+
+// import team1 from "../../../assets/img/faces/meanddaisy.jpg";
+// import team2 from "../../../assets/img/faces/matt.png";
+// import team3 from "../../../assets/img/faces/card-profile1-square.jpg";
+
 // core components
-import GridContainer from "../../../components/Grid/GridContainer.jsx";
-import GridItem from "../../../components/Grid/GridItem.jsx";
-import Button from "../../../components/CustomButtons/Button.jsx";
-import Card from "../../../components/Card/Card.jsx";
-import CardBody from "../../../components/Card/CardBody.jsx";
-import CardFooter from "../../../components/Card/CardFooter.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
 
-import teamStyle from "../../../assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
+import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.jsx";
 
-import team1 from "../../../assets/img/faces/meanddaisy.jpg";
-import team2 from "../../../assets/img/faces/matt.png";
-import team3 from "../../../assets/img/faces/card-profile1-square.jpg";
+import team1 from "assets/img/faces/meanddaisy.jpg";
+import team2 from "assets/img/faces/matt.png";
+import team3 from "assets/img/faces/card-profile1-square.jpg";
 
 class TeamSection extends React.Component {
   render() {
