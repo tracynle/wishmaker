@@ -1,18 +1,20 @@
 // This file connects to your mysql workbench along with your jawsdb from heroku
-var mysql = require('mysql');ß
+var mysql = require('mysql');
 var connection;
 
-if (process.env.JAWSDB_URL) {
+if (process.env.JAWS_DB_URL) {
+    console.log("JJJJJ")
     // Database is JawsDB on Heroku
     connection = mysql.createConnection(process.env.JAWSDB_URL);
 } else {
     // Database is local. Be sure to change the password so you can connect the db to your workbench
+    console.log("WWWWW")
     connection = mysql.createConnection({
         port: 3306,
         host: 'localhost',
         user: 'root',
         password: 'Ngoc513*',
-        database: 'react_project_db'
+        database: 'wishmaker_db'
     })
 };
 

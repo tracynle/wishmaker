@@ -18,10 +18,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "jk2wox6erzohshs7",
-    "password": "fxufznry709mn6qr",
-    "database": "c0dgvyg201xisl4p",
-    "host": "l7cup2om0gngra77.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "username": "we7szheup647mu6g",
+    "password": "o7hrnumhde5berps",
+    "database": "o7se9a6bqr86xvy2",
+    "host": "arfo8ynm6olw6vpn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql",
     "use_env_variable": "JAWS_DB_URL",

@@ -1,8 +1,8 @@
 -- Drops if it exists currently --
--- DROP DATABASE IF EXISTS react_project_db;
-CREATE DATABASE react_project_db;
+DROP DATABASE IF EXISTS wishmaker_db;
+CREATE DATABASE wishmaker_db;
 
-USE react_project_db;
+USE wishmaker_db;
 SELECT * FROM Users;
 
 INSERT  INTO Users
