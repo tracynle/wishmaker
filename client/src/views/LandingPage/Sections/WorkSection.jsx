@@ -10,7 +10,7 @@ import GridItem from "../../../components/Grid/GridItem.jsx";
 import CustomInput from "../../../components/CustomInput/CustomInput.jsx";
 import Button from "../../../components/CustomButtons/Button.jsx";
 
-import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
+import workStyle from "../../../assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 
 class WorkSection extends React.Component {
   render() {

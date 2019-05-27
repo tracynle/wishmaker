@@ -14,7 +14,7 @@ import GridItem from "../../components/Grid/GridItem.jsx";
 import Button from "../../components/CustomButtons/Button.jsx";
 import Parallax from "../../components/Parallax/Parallax.jsx";
 
-import landingPageStyle from "../assets/jss/material-kit-react/views/landingPage.jsx";
+import landingPageStyle from "../../assets/jss/material-kit-react/views/landingPage.jsx";
 
 // Sections for this page
 import ProductSection from "./Sections/ProductSection.jsx";
