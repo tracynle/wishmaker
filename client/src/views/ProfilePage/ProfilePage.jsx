@@ -7,7 +7,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Camera from "@material-ui/icons/Camera";
 import Palette from "@material-ui/icons/Palette";
 import Favorite from "@material-ui/icons/Favorite";
-import SearchIcon from "@material-ui/icons/Search";
+// import SearchIcon from "@material-ui/icons/Search";
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -32,31 +32,11 @@ import work4 from "assets/img/examples/mariya-georgieva.jpg";
 import work5 from "assets/img/examples/clem-onojegaw.jpg";
 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
-import InputBase from "@material-ui/core/InputBase";
+// import InputBase from "@material-ui/core/InputBase";
 
-// import Header from "../../components/Header/Header.jsx";
-// import Footer from "../../components/Footer/Footer.jsx";
-// import Button from "../../components/CustomButtons/Button.jsx";
-// import GridContainer from "../../components/Grid/GridContainer.jsx";
-// import GridItem from "../../components/Grid/GridItem.jsx";
-// import HeaderLinks from "../../components/Header/HeaderLinks.jsx";
-// import NavPills from "../../components/NavPills/NavPills.jsx";
-// import Parallax from "../../components/Parallax/Parallax.jsx";
-
-// import profile from "../../assets/img/faces/christian.jpg";
-
-// import studio1 from "../../assets/img/examples/studio-1.jpg";
-// import studio2 from "../../assets/img/examples/studio-2.jpg";
-// import studio3 from "../../assets/img/examples/studio-3.jpg";
-// import studio4 from "../../assets/img/examples/studio-4.jpg";
-// import studio5 from "../../assets/img/examples/studio-5.jpg";
-// import work1 from "../../assets/img/examples/olu-eletu.jpg";
-// import work2 from "../../assets/img/examples/clem-onojeghuo.jpg";
-// import work3 from "../../assets/img/examples/cynthia-del-rio.jpg";
-// import work4 from "../../assets/img/examples/mariya-georgieva.jpg";
-// import work5 from "../../assets/img/examples/clem-onojegaw.jpg";
-
-// import profilePageStyle from "../../assets/jss/material-kit-react/views/profilePage.jsx";
+import SearchBar from "components/SearchBar/SearchBar.jsx";
+import Search from "@material-ui/icons/Search";
+import ProductCard from "components/ProductCard/ProductCard.jsx"
 // Profile page will show once user logs in
 
 class ProfilePage extends React.Component {
@@ -115,8 +95,17 @@ class ProfilePage extends React.Component {
                   go-to as a gift.{" "}
                 </p>
               </div>
+              
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
+                  <div className={classes.container} justify="center">
+                    <SearchBar history={this.props.history} />
+                  </div>
+                </GridItem>
+              </GridContainer>
+
+              <GridContainer justify="center">
+                <GridItem xs={12} sm={12} md={12} className={classes.navWrapper}>
                   <NavPills
                     alignCenter
                     color="primary"
@@ -126,7 +115,7 @@ class ProfilePage extends React.Component {
                         tabIcon: Camera,
                         tabContent: (
                           <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
+                            <GridItem xs={12} sm={12} md={6}>
                               <img
                                 alt="..."
                                 src={studio1}
@@ -138,7 +127,7 @@ class ProfilePage extends React.Component {
                                 className={navImageClasses}
                               />
                             </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
+                            <GridItem xs={12} sm={12} md={6}>
                               <img
                                 alt="..."
                                 src={studio5}
@@ -158,7 +147,7 @@ class ProfilePage extends React.Component {
                         tabIcon: Palette,
                         tabContent: (
                           <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
+                            <GridItem xs={12} sm={12} md={6}>
                               <img
                                 alt="..."
                                 src={work1}
@@ -175,7 +164,7 @@ class ProfilePage extends React.Component {
                                 className={navImageClasses}
                               />
                             </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
+                            <GridItem xs={12} sm={12} md={6}>
                               <img
                                 alt="..."
                                 src={work4}
@@ -228,26 +217,17 @@ class ProfilePage extends React.Component {
                         )
                       },
                       {
-                        tabButton: "Search",
-                        tabIcon: SearchIcon,
+                        tabButton: "Search Results",
+                        tabIcon: Search,
                         tabContent: (
-                          <div>
-                            <div className={classes.grow} />
-                            <div className={classes.search}>
-                              <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                  root: this.props.classes.inputRoot,
-                                  input: this.props.classes.inputInput
-                                }}
-                                onKeyUp={e => {
-                                  this.doSomethingWithSearchTerms(e);
-                                }}
-                              />
-                            </div>
-                          </div>
+                          <GridContainer justify="center">
+                            <GridItem xs={12} sm={12} md={4}>
+                              <ProductCard/>
+                            </GridItem>
+                          </GridContainer>
                         )
                       }
+            
                     ]}
                   />
                 </GridItem>
