@@ -4,7 +4,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
 import People from "@material-ui/icons/People";
 // core components
 import Header from "components/Header/Header.jsx";
@@ -23,14 +22,66 @@ import SignupPageStyle from "assets/jss/material-kit-react/views/signupPage.jsx"
 
 import image from "assets/img/bg7.jpg";
 
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import DatePicker from "components/DatePicker/DatePicker.jsx";
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
+  
     // we use this to make the card to appear after the page has been rendered
     this.state = {
-      cardAnimaton: "cardHidden"
+      cardAnimaton: "cardHidden",
+      username: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      aboutMe: "",
+      birthday: undefined,
+      redirect: false,
+      showPassword: false,
     };
   }
+  handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  handleClickShowPassword = () => {
+    this.setState(state => ({ showPassword: !state.showPassword }));
+  };
+
+  handleDayClick(day){
+      this.setState({birthday: day});
+  }
+
+  handleInputChange = event => { 
+      const { name, value } = event.target; 
+          this.setState({
+          [name]: value
+      });
+  };
+
+  handleFormSubmit = event => {
+      event.preventDefault();
+        if (this.state.username && this.state.password) {
+            this.props.history.push('/user')
+        /*AuthAPI.signup({
+            username: this.state.username,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            aboutMe: this.state.aboutMe,
+            birthday: this.state.birthday
+        })
+        .then(res => {
+            Auth.setToken(res.data.token);
+            this.props.history.push('/user')
+            console.log(res.data.token)
+        })
+        .catch(err => console.log(err));
+    };*/
+    }
+};
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(
@@ -69,8 +120,8 @@ class SignupPage extends React.Component {
                     </CardHeader>
                     <CardBody>
                       <CustomInput
-                        labelText="First Name..."
-                        id="first"
+                        labelText="Name"
+                        id="name"
                         formControlProps={{
                           fullWidth: true
                         }}
@@ -84,16 +135,18 @@ class SignupPage extends React.Component {
                         }}
                       />
                       <CustomInput
-                        labelText="Email..."
-                        id="email"
+                        labelText="User Name"
+                        id="username"
                         formControlProps={{
                           fullWidth: true
                         }}
                         inputProps={{
-                          type: "email",
+                          type: "username",
                           endAdornment: (
                             <InputAdornment position="end">
-                              <Email className={classes.inputIconsColor} />
+                              <Icon className={classes.inputIconsColor}>
+                              assignment_ind
+                              </Icon>
                             </InputAdornment>
                           )
                         }}
@@ -115,12 +168,35 @@ class SignupPage extends React.Component {
                           )
                         }}
                       />
+                      <CustomInput
+                        labelText="Few words about yourself"
+                        id="about"
+                        multiline
+                        rows="4"
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                        inputProps={{
+                          type: "about",
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <Icon className={classes.inputIconsColor}>
+                                info
+                              </Icon>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                      <DatePicker/>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                       <Button simple color="primary" size="lg">
+                        <Link to='/profile-page' style={{ textDecoration: 'none' }} >
                         Get started
+                        </Link>
                       </Button>
                     </CardFooter>
+                    
                   </form>
                 </Card>
               </GridItem>
@@ -132,5 +208,9 @@ class SignupPage extends React.Component {
     );
   }
 }
+SignupPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
 
 export default withStyles(SignupPageStyle)(SignupPage);

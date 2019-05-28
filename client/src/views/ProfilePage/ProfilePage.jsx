@@ -37,9 +37,49 @@ import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.js
 import SearchBar from "components/SearchBar/SearchBar.jsx";
 import Search from "@material-ui/icons/Search";
 import ProductCard from "components/ProductCard/ProductCard.jsx"
+// import axios from 'axios';
+
 // Profile page will show once user logs in
 
 class ProfilePage extends React.Component {
+  componentDidUpdate(prevProps) {
+    console.log("zzzzzz", this.props);
+    if(this.props.location.items){
+      document.querySelectorAll("button[role=tab]")[2].click();
+    }
+    
+  }
+
+  //**TRACY --- added another button that allows you to search products and render them */
+  searchProductsClick = (e) => {
+    e.preventDefault();
+    if (this.state.renderProducts === false) {
+      this.setState({
+        renderProducts: true
+      });
+      console.log('this should be false: ' + this.state.renderProducts)
+    }
+  };
+
+  friendsClick = (e) => {
+    e.preventDefault();
+    function UserBannerFriendsClick() {
+      //Input logic that will route to the users list of friends
+      return console.log("Going to my list of Friends");
+    }
+    return UserBannerFriendsClick();
+  };
+
+
+  savedWishesClick = (e) => {
+    e.preventDefault();
+    function UserBannerSavedWishesClick() {
+      //Input logic that will route to all of the items you saved for your friends
+      return console.log("Going to all the Wishes that you saved for your friends");
+    }
+    return UserBannerSavedWishesClick();
+  };
+
   render() {
     const { classes, ...rest } = this.props;
     const imageClasses = classNames(
@@ -48,6 +88,12 @@ class ProfilePage extends React.Component {
       classes.imgFluid
     );
     const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
+
+    // To check if the items are available, if not set it to an empty array
+    const items = this.props.location.items ? this.props.location.items : [];
+    
+    
+    
     return (
       <div>
         <Header
@@ -88,6 +134,7 @@ class ProfilePage extends React.Component {
               </GridContainer>
               <div className={classes.description}>
                 <h5>About Me</h5>
+                <h5>Birthday: 5/27/89 {this.props.birthday}</h5>
                 <p>
                   I love surfing the waves of San Diego, and I enjoying an
                   amazing fish taco. I'm a huge hat collector; friends always
@@ -95,7 +142,9 @@ class ProfilePage extends React.Component {
                   go-to as a gift.{" "}
                 </p>
               </div>
-              
+
+
+              {/* SEARCH BAR */}
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
                   <div className={classes.container} justify="center">
@@ -104,6 +153,8 @@ class ProfilePage extends React.Component {
                 </GridItem>
               </GridContainer>
 
+
+              {/* TABS SECTION */}
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={12} className={classes.navWrapper}>
                   <NavPills
@@ -143,43 +194,7 @@ class ProfilePage extends React.Component {
                         )
                       },
                       {
-                        tabButton: "Brands",
-                        tabIcon: Palette,
-                        tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={6}>
-                              <img
-                                alt="..."
-                                src={work1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work2}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work3}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={6}>
-                              <img
-                                alt="..."
-                                src={work4}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work5}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        )
-                      },
-                      {
+                        // WISH LIST SAVED
                         tabButton: "Wish list",
                         tabIcon: Favorite,
                         tabContent: (
@@ -217,12 +232,25 @@ class ProfilePage extends React.Component {
                         )
                       },
                       {
-                        tabButton: "Search Results",
+                        // SEARCH RESULTS RENDER
+                        
+                        tabButton: "Search",
                         tabIcon: Search,
                         tabContent: (
                           <GridContainer justify="center">
                             <GridItem xs={12} sm={12} md={4}>
-                              <ProductCard/>
+                            {items.map(item => { 
+                              return (
+                                <ProductCard
+                                  key={item.listing_id}
+                                  listing_id={item.listing_id}
+                                  title={item.title}
+                                  tags={item.tags}
+                                  price={item.price}
+                                  description={item.description}
+                                />
+                              )
+                            })}
                             </GridItem>
                           </GridContainer>
                         )

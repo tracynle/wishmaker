@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames'; // not sure what this does
+import classnames from 'classnames'; 
 import Card from '@material-ui/core/Card';
 
 import CardMedia from '@material-ui/core/CardMedia';
@@ -91,7 +91,7 @@ class ProductCard extends Component {
         description: this.props.description
       })
       .then(response => {
-        console.log("=============================RESPONSE==============================");
+        console.log("===== RESPONSE =====");
         console.log(response);
         this.setState({
           id: response.data.id

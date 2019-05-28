@@ -3,18 +3,6 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-
-// @material-ui/icons
-
-// import Header from "../../components/Header/Header.jsx";
-// import Footer from "../../components/Footer/Footer.jsx";
-// import GridContainer from "../../components/Grid/GridContainer.jsx";
-// import GridItem from "../../components/Grid/GridItem.jsx";
-// import Button from "../../components/CustomButtons/Button.jsx";
-// import Parallax from "../../components/Parallax/Parallax.jsx";
-
-// import landingPageStyle from "../../assets/jss/material-kit-react/views/landingPage.jsx";
-
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -61,7 +49,6 @@ class LandingPage extends React.Component {
                   color="primary"
                   size="md"
                   href="../login-page"
-                  // target="_blank"
                   rel="noopener noreferrer"
                 >
                   Login
@@ -70,7 +57,6 @@ class LandingPage extends React.Component {
                   color="primary"
                   size="md"
                   href="../signup-page"
-                  // target="_blank"
                   rel="noopener noreferrer"
                 >
                   Sign Up
