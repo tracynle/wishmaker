@@ -236,8 +236,7 @@ class ProfilePage extends React.Component {
                         tabButton: "Search",
                         tabIcon: Search,
                         tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
+                          <GridContainer>
                             {items.map(item => { 
                               return (
                                 <ProductCard
@@ -250,7 +249,6 @@ class ProfilePage extends React.Component {
                                 />
                               )
                             })}
-                            </GridItem>
                           </GridContainer>
                         )
                       }

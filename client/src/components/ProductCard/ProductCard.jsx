@@ -16,6 +16,9 @@ import white from '@material-ui/core/colors/common';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// added by matt 
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
 
 import axios from 'axios';
 
@@ -141,52 +144,54 @@ class ProductCard extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={this.state.image}
-          title={this.props.title}
-        />
-        <CardContent className={classes.productCardTitle}>
-          <Typography variant="h6">
-            {this.props.title}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.actions && classes.favAndPricePadding} disableActionSpacing>
-          <IconButton className={classnames(
-            classes.isNotLoved, {
-            [classes.isLoved]: this.state.loved
-          })}
-          onClick={this.handleLovedClick}
-          aria-label="Add to your list!" 
-          >
-            <FavoriteIcon />
-          </IconButton>
-          <Typography variant='h6'>
-            {"$" + parseFloat(this.props.price)}
-          </Typography>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography variant='h6'>Description:</Typography>
-            <Typography component="p">
-            {this.props.description}
-            </Typography>
-          </CardContent>
-        </Collapse>
-      </Card>
-      </div>
+        <GridItem xs={6} sm={6} md={4} lg={3}>
+          <div>
+          <Card className={classes.card}>
+            <CardMedia
+              className={classes.media}
+              image={this.state.image}
+              title={this.props.title}
+            />
+            <CardContent className={classes.productCardTitle}>
+              <Typography component='p'>
+                {this.props.title}
+              </Typography>
+            </CardContent>
+            <CardActions className={classes.actions && classes.favAndPricePadding} disableActionSpacing>
+              <IconButton className={classnames(
+                classes.isNotLoved, {
+                [classes.isLoved]: this.state.loved
+              })}
+              onClick={this.handleLovedClick}
+              aria-label="Add to your list!" 
+              >
+                <FavoriteIcon />
+              </IconButton>
+              <Typography variant='h6'>
+                {"$" + parseFloat(this.props.price)}
+              </Typography>
+              <IconButton
+                className={classnames(classes.expand, {
+                  [classes.expandOpen]: this.state.expanded,
+                })}
+                onClick={this.handleExpandClick}
+                aria-expanded={this.state.expanded}
+                aria-label="Show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography variant='h6'>Description:</Typography>
+                <Typography component="p">
+                {this.props.description}
+                </Typography>
+              </CardContent>
+            </Collapse>
+          </Card>
+          </div>
+        </GridItem>
     );
   }
 }
