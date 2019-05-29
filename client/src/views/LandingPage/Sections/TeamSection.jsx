@@ -15,7 +15,7 @@ import teamStyle from "assets/jss/material-kit-react/views/landingPageSections/t
 
 import team1 from "assets/img/faces/tracy.png";
 import team2 from "assets/img/faces/matt.png";
-import team3 from "assets/img/faces/card-profile1-square.jpg";
+import team3 from "assets/img/faces/irvin.png";
 
 class TeamSection extends React.Component {
   render() {

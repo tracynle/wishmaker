@@ -25,6 +25,7 @@ import image from "assets/img/bg7.jpg";
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DatePicker from "components/DatePicker/DatePicker.jsx";
+
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);

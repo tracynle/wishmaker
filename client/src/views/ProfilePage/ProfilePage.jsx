@@ -5,7 +5,7 @@ import classNames from "classnames";
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
 import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
+// import Palette from "@material-ui/icons/Palette";
 import Favorite from "@material-ui/icons/Favorite";
 // import SearchIcon from "@material-ui/icons/Search";
 // core components
@@ -27,9 +27,9 @@ import studio4 from "assets/img/examples/studio-4.jpg";
 import studio5 from "assets/img/examples/studio-5.jpg";
 import work1 from "assets/img/examples/olu-eletu.jpg";
 import work2 from "assets/img/examples/clem-onojeghuo.jpg";
-import work3 from "assets/img/examples/cynthia-del-rio.jpg";
+// import work3 from "assets/img/examples/cynthia-del-rio.jpg";
 import work4 from "assets/img/examples/mariya-georgieva.jpg";
-import work5 from "assets/img/examples/clem-onojegaw.jpg";
+// import work5 from "assets/img/examples/clem-onojegaw.jpg";
 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 // import InputBase from "@material-ui/core/InputBase";
