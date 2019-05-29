@@ -233,7 +233,6 @@ class ProfilePage extends React.Component {
                       },
                       {
                         // SEARCH RESULTS RENDER
-                        
                         tabButton: "Search",
                         tabIcon: Search,
                         tabContent: (
