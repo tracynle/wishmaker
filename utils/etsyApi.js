@@ -4,8 +4,8 @@ let axios = require("axios");
 // It accepts a "query" or term to search the result api for
 
 // ----------- Etsy Listings --------
-const baseListingUrl = "https://openapi.etsy.com/v2/listings/active?limit=9&offset=0";
-const APIKEY = "api_key=rdym62jwh3l5iv0m0va5cx0c";	
+const baseListingUrl = "https://openapi.etsy.com/v2/listings/active?limit=8&offset=0";
+const APIKEY = process.env.APIKEY;	
 
 // ----------- Etsy Images -----------
 const baseImageUrl = "https://openapi.etsy.com/v2/listings/"
