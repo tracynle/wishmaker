@@ -118,7 +118,9 @@ class ProfilePage extends React.Component {
                       <img src={profile} alt="..." className={imageClasses} />
                     </div>
                     <div className={classes.name}>
+                      <div>
                       <h3 className={classes.title}>Christian Louboutin</h3>
+                      </div>
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                       </Button>
@@ -133,7 +135,6 @@ class ProfilePage extends React.Component {
                 </GridItem>
               </GridContainer>
               <div className={classes.description}>
-                <h5>About Me</h5>
                 <h5>Birthday: 5/27/89 {this.props.birthday}</h5>
                 <p>
                   I love surfing the waves of San Diego, and I enjoying an
@@ -252,7 +253,6 @@ class ProfilePage extends React.Component {
                           </GridContainer>
                         )
                       }
-            
                     ]}
                   />
                 </GridItem>
