@@ -2,15 +2,15 @@
 DROP DATABASE IF EXISTS wishmaker_db;
 CREATE DATABASE wishmaker_db;
 
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MattPassword';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Ngoc513*';
 
 USE wishmaker_db;
 SELECT * FROM Users;
 
 INSERT  INTO Users
-(userName, password, email, birthday, createdAt, updatedAt) 
+(userName, password, birthday, createdAt, updatedAt) 
 
-VALUES ('Peter Parker', 'webmaster', 'weby@email.com', '05/26/2019',now(), now());
+VALUES ('Peter Parker', 'webmaster', '05/26/2019',now(), now());
 
 SELECT * FROM UserLikes;
 

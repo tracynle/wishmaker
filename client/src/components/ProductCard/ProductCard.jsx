@@ -17,7 +17,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // added by matt 
-import GridContainer from "components/Grid/GridContainer.jsx";
+// import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 import axios from 'axios';
@@ -91,7 +91,9 @@ class ProductCard extends Component {
         imageUrl: this.state.image,
         title: this.props.title,
         price: this.props.price,
-        description: this.props.description
+        description: this.props.description,
+        // IRVIN: insert token OAuth for user login in Header 
+        // Won't be able to render wishlist cards user likes
       })
       .then(response => {
         console.log("===== RESPONSE =====");

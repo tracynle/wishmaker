@@ -22,13 +22,13 @@ import profile from "assets/img/faces/christian.jpg";
 
 import studio1 from "assets/img/examples/studio-1.jpg";
 import studio2 from "assets/img/examples/studio-2.jpg";
-import studio3 from "assets/img/examples/studio-3.jpg";
+// import studio3 from "assets/img/examples/studio-3.jpg";
 import studio4 from "assets/img/examples/studio-4.jpg";
 import studio5 from "assets/img/examples/studio-5.jpg";
-import work1 from "assets/img/examples/olu-eletu.jpg";
-import work2 from "assets/img/examples/clem-onojeghuo.jpg";
+// import work1 from "assets/img/examples/olu-eletu.jpg";
+// import work2 from "assets/img/examples/clem-onojeghuo.jpg";
 // import work3 from "assets/img/examples/cynthia-del-rio.jpg";
-import work4 from "assets/img/examples/mariya-georgieva.jpg";
+// import work4 from "assets/img/examples/mariya-georgieva.jpg";
 // import work5 from "assets/img/examples/clem-onojegaw.jpg";
 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
@@ -37,11 +37,24 @@ import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.js
 import SearchBar from "components/SearchBar/SearchBar.jsx";
 import Search from "@material-ui/icons/Search";
 import ProductCard from "components/ProductCard/ProductCard.jsx"
+import WishesCard from "components/WishesCard/WishesCard.jsx";
 // import axios from 'axios';
 
 // Profile page will show once user logs in
 
 class ProfilePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false,
+      renderProducts: true,
+      wishCards: []
+    };
+
+    // this.wishlistClick = this.wishlistClick.bind(this);
+    // this.searchProductsClick = this.searchProductsClick.bind(this);
+  }
+
   componentDidUpdate(prevProps) {
     console.log("zzzzzz", this.props);
     if(this.props.location.items){
@@ -70,15 +83,32 @@ class ProfilePage extends React.Component {
     return UserBannerFriendsClick();
   };
 
+  // wishlistClick = (e) => {
+  //   e.preventDefault();
+  
+  //   // Make a get request from UserLikes db in the UserId column which gets their liked items
+  //   // will be called in wishListClick
+  //   axios.get('api/userLikes', {
+  //     params: {
+  //       userId: ashKetchum.id
+  //     },
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token")
+  //     }
+  //   })
+  //   .then(response => {
+  //     console.log("Response!!!!!", response);
+  //     // using setState, we save the response in the state: wishCards state
+  //       this.setState({
+  //         wishCards: response.data
+  //       })
+  //   })
+  //   .catch(function (error) {
+  //       console.log(error);
+  //   })
+    
+  // };
 
-  savedWishesClick = (e) => {
-    e.preventDefault();
-    function UserBannerSavedWishesClick() {
-      //Input logic that will route to all of the items you saved for your friends
-      return console.log("Going to all the Wishes that you saved for your friends");
-    }
-    return UserBannerSavedWishesClick();
-  };
 
   render() {
     const { classes, ...rest } = this.props;
@@ -90,9 +120,35 @@ class ProfilePage extends React.Component {
     const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
 
     // To check if the items are available, if not set it to an empty array
+    // location is provided by router dom which means the variable items is checking 
+    // for the redirected route and the items passed with the redirect 
+    // otherwise it will be put in an empty array
     const items = this.props.location.items ? this.props.location.items : [];
     
-    
+    let mapWishlistCards = this.state.wishCards.map(item => {
+      return (
+        <WishesCard 
+          key={item.id}
+          title={item.title}
+          image={item.imageUrl}
+          price={item.price}
+          description={item.description}
+        />
+      )
+    })
+
+    //**TRACY --- this is where I saved the mapping of product card as a variable */
+    let mapProductCards = items.map(item => {
+      return (
+        <ProductCard
+          key={item.listing_id}
+          listing_id={item.listing_id}
+          title={item.title}
+          price={item.price}
+          description={item.description}
+        />
+      )
+    });
     
     return (
       <div>
@@ -200,33 +256,7 @@ class ProfilePage extends React.Component {
                         tabContent: (
                           <GridContainer justify="center">
                             <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work4}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio3}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work2}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio1}
-                                className={navImageClasses}
-                              />
+                              {mapWishlistCards}
                             </GridItem>
                           </GridContainer>
                         )
@@ -237,18 +267,7 @@ class ProfilePage extends React.Component {
                         tabIcon: Search,
                         tabContent: (
                           <GridContainer>
-                            {items.map(item => { 
-                              return (
-                                <ProductCard
-                                  key={item.listing_id}
-                                  listing_id={item.listing_id}
-                                  title={item.title}
-                                  tags={item.tags}
-                                  price={item.price}
-                                  description={item.description}
-                                />
-                              )
-                            })}
+                            {mapProductCards}
                           </GridContainer>
                         )
                       }

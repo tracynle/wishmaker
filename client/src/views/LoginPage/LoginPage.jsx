@@ -21,6 +21,8 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/bg7.jpg";
+// import axios from "axios";
+
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -39,7 +41,30 @@ class LoginPage extends React.Component {
       700
     );
   }
-  render() {
+
+  loginEnterButtonClicked(event) {
+    // this.setState({isLoading: true});
+    event.preventDefault();
+    console.log("User clicked Enter button!");
+
+    // axios.post("/api/login", {
+    //   params: {
+    //     userId: userName.id
+    //   },
+    //   headers: {
+    //     Authorization: "Bearer " + localStorage.getItem("token")
+    //   }
+
+    // })
+    // .then((response) => {
+    //   this.setState({ data: response.data, isLoading: false });
+    // })
+    // .catch((err) => {
+    //   this.setState({ data: err, isLoading: false });
+    // });
+  }
+
+  render() { 
     const { classes, ...rest } = this.props;
     return (
       <div>
@@ -62,7 +87,7 @@ class LoginPage extends React.Component {
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>
                 <Card className={classes[this.state.cardAnimaton]}>
-                  <form className={classes.form}>
+                  <form className={classes.form} action="/api/login" method="post">
                     <CardHeader color="primary" className={classes.cardHeader}>
                       <h4>Login</h4>
                       <div className={classes.socialLine}>
@@ -114,7 +139,7 @@ class LoginPage extends React.Component {
                       />
                       <CustomInput
                         labelText="Password"
-                        id="pass"
+                        id="password"
                         formControlProps={{
                           fullWidth: true
                         }}
@@ -131,7 +156,8 @@ class LoginPage extends React.Component {
                       />
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
+                    {/* Make an axios request to the login page*/}
+                      <Button simple color="primary" size="lg" onClick={this.loginEnterButtonClicked}>
                         Enter
                       </Button>
                     </CardFooter>

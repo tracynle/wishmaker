@@ -1,8 +1,34 @@
 let db = require("../models");
 const path = require("path");
 let etsyApi = require("../utils/etsyApi");
+const passport = require('passport');
 
 module.exports = function(app) {
+
+  app.post("/api/login", function(req, res, next) {
+    // https://github.com/jwalton/passport-api-docs#passportauthenticatestrategyname-options-callback
+    // passport.authenticate('local', { successReturnToOrRedirect: '/profile-page', failureRedirect: '/login-page' }, function(err, user, info) {
+    
+    // may not be the correct spot to authenticate here. need to work on it
+    passport.authenticate('local', {}, function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login-page'); }
+
+      console.log("DDDDD authenticated the user:")
+      // console.log(user);
+
+      // NEED TO CALL req.login()!!! ???
+      // req.login(user, next);
+      res.json(user);
+    })(req, res, next);
+  });
+
+  // When user logs out, they will be redirected to the home page
+  app.get("/api/logout", function(req, res, next) {
+    req.logout();
+    res.redirect('/');
+  });
+
   // --------------- DB User Routes ----------------------------
   // Get/findALL all users (READ)
   app.get("/api/user", function(req, res) {
@@ -21,12 +47,16 @@ module.exports = function(app) {
     });
   });
 
-  // -------------- DB userLikes Routes --------------------
+  // -------------- DB userLikes Routes Bearer Strategy --------------------
   // Get all likes from the user
-  app.get("/api/userLikes/", function(req, res) {
+  app.get("/api/userLikes/", function(req, res, next) {
+    console.log("EEEEE Getting user likes");
+    // console.log(req.headers);
+
+
     db.UserLikes.findAll({
       where: {
-        UserId: req.query.userId
+        UserId: req.user.id
       }
     }).then(function(dbUserLikes) {
       res.json(dbUserLikes);
