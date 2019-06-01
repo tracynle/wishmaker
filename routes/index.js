@@ -4,7 +4,7 @@ let etsyApi = require("../utils/etsyApi");
 const passport = require('passport');
 
 module.exports = function(app) {
-
+  // ------- Login authentication -------
   app.post("/api/login", function(req, res, next) {
     // https://github.com/jwalton/passport-api-docs#passportauthenticatestrategyname-options-callback
     // passport.authenticate('local', { successReturnToOrRedirect: '/profile-page', failureRedirect: '/login-page' }, function(err, user, info) {
@@ -29,15 +29,16 @@ module.exports = function(app) {
     res.redirect('/');
   });
 
-  // --------------- DB User Routes ----------------------------
+  // --------------- DB User Routes -----------
   // Get/findALL all users (READ)
-  app.get("/api/user", function(req, res) {
+  app.get("/api/user", function(req, res, next) {
     db.Users.findAll({}).then(function(dbUser) {
       res.json(dbUser);
     });
   });
-  // Create new user > Add to db (CREATE)
-  app.post("/api/user", function(req, res) {
+
+  // ------- Create new user > Add to db (CREATE) -------
+  app.post("/api/signup", function(req, res, next) {
     //db.tableName.create(req.body).then(function(dbName) {});
     db.Users.create(req.body).then(function(dbUser) {
       // console.log(res.body);
@@ -48,35 +49,55 @@ module.exports = function(app) {
   });
 
   // -------------- DB userLikes Routes Bearer Strategy --------------------
-  // Get all likes from the user
+  // ------- Get all likes from the user -------
   app.get("/api/userLikes/", function(req, res, next) {
     console.log("EEEEE Getting user likes");
     // console.log(req.headers);
+  
+    // may not be the correct spot to authenticate here. need to work on it
+    passport.authenticate('bearer', {}, function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login-page'); }
 
+      console.log("FFFFFF authenticated the user:")
+      // console.log(user);
 
-    db.UserLikes.findAll({
-      where: {
-        UserId: req.user.id
-      }
-    }).then(function(dbUserLikes) {
-      res.json(dbUserLikes);
-    });
+      db.UserLikes.findAll({
+        where: {
+          UserId: user.id
+        }
+      }).then(function(dbUserLikes) {
+        res.json(dbUserLikes);
+      });
+    })(req, res, next);
   });
 
-  // Create new user > Add to db (CREATE)
-  app.post("/api/userLikes/", function(req, res) {
-    console.log("=================== ZZZZZZZZZ ===============");
+  // ------- Posts userlikes into the db -------
+  app.post("/api/userLikes/", function(req, res, next) {
+    console.log("USERLIKES POSTED IN DB");
     console.log(req.body);
-    //db.tableName.create(req.body).then(function(dbName) {});
-    db.UserLikes.create(req.body).then(function(dbUserLikes) {
-      // console.log(res.body);
-      console.log(dbUserLikes);
-      // console.log(res);
-      res.json(dbUserLikes);
-    });
+
+    passport.authenticate('bearer', {}, function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/login-page'); }
+
+      console.log("FFFFFF authenticated the user:")
+
+      let data = req.body;
+      data.UserId = user.id;
+
+      db.UserLikes.create(data).then(function(dbUserLikes) {
+        // console.log(res.body);
+        console.log(dbUserLikes);
+        // console.log(res);
+        res.json(dbUserLikes);
+      });
+    })(req, res, next);
+
   });
 
-  app.delete("/api/userLikes/:id", function(req, res) {
+  // ---- Deletes userlikes in db ------
+  app.delete("/api/userLikes/:id", function(req, res, next) {
     db.UserLikes.destroy({
       where: {
         id: req.params.id
@@ -84,9 +105,9 @@ module.exports = function(app) {
     })
   })
 
-  // -------------- DB user info with likes --------------------
-  app.get("/api/user/userLikes", function(req, res) {
-    console.log("PRINT TEST");
+  // ----- Finds all userlikes in db -----
+  app.get("/api/user/userLikes", function(req, res, next) {
+    console.log("FIND ALL USERLIKES");
     console.log(req.query.UserId);
     db.UserLikes.findAll({
       where: {
@@ -98,9 +119,9 @@ module.exports = function(app) {
   });
   
   // =============================================== //
-  // Create new friendship > Add to db (CREATE)
-  app.post("/api/friends", function(req, res) {
-    console.log("ZZZZZZZZZ");
+  // ---- Create new friendship > Add to db (CREATE)
+  app.post("/api/friends", function(req, res, next) {
+    console.log("FRIENDSHIP MADE");
     console.log(req.body);
     console.log(Object.keys(db.Users));
     //db.tableName.create(req.body).then(function(dbName) {});
@@ -115,7 +136,7 @@ module.exports = function(app) {
         }
       })
       .then(function(User2) {
-        console.log("ADDING USERS========")
+        console.log("ADDING USERS")
         console.log(User1.addFriend1);
         console.log(User1.addFriend2);
         User1.addFriend1(User2);
@@ -126,7 +147,7 @@ module.exports = function(app) {
 
   // =============================================== //
   // ------ Etsy Api Results route -------
-  app.get("/api/search/", function(req, res){
+  app.get("/api/search/", function(req, res, next){
     console.log("Search results:");
     etsyApi.search(req.query.item).then(function(response) {
       // Make an API call to Etsy's api to do search and return user's search
@@ -138,8 +159,8 @@ module.exports = function(app) {
   });
 
   // ------ Etsy Api Images route -------
-  app.get("/api/images/", function(req, res){
-    console.log("====== Image results:");
+  app.get("/api/images/", function(req, res, next){
+    console.log("Image results:");
     etsyApi.images(req.query.item).then(function(response) {
       // Make an API call to Etsy's api to do search and return user's search
       res.json(response.data);

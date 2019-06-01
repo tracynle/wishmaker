@@ -22,9 +22,11 @@ import SignupPageStyle from "assets/jss/material-kit-react/views/signupPage.jsx"
 
 import image from "assets/img/bg7.jpg";
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DatePicker from "components/DatePicker/DatePicker.jsx";
+
+import axios from "axios";
 
 class SignupPage extends React.Component {
   constructor(props) {
@@ -33,11 +35,10 @@ class SignupPage extends React.Component {
     // we use this to make the card to appear after the page has been rendered
     this.state = {
       cardAnimaton: "cardHidden",
+      name: "",
       username: "",
       password: "",
-      firstName: "",
-      lastName: "",
-      aboutMe: "",
+      about: "",
       birthday: undefined,
       redirect: false,
       showPassword: false,
@@ -63,26 +64,13 @@ class SignupPage extends React.Component {
   };
 
   handleFormSubmit = event => {
-      event.preventDefault();
-        if (this.state.username && this.state.password) {
-            this.props.history.push('/user')
-        /*AuthAPI.signup({
-            username: this.state.username,
-            password: this.state.password,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            aboutMe: this.state.aboutMe,
-            birthday: this.state.birthday
-        })
-        .then(res => {
-            Auth.setToken(res.data.token);
-            this.props.history.push('/user')
-            console.log(res.data.token)
-        })
-        .catch(err => console.log(err));
-    };*/
+    event.preventDefault();
+    if (this.state.username && this.state.password) {
+      this.props.history.push('/user')
+      
     }
-};
+  };
+
   componentDidMount() {
     // we add a hidden class to the card and after 700 ms we delete it and the transition appears
     setTimeout(
@@ -92,6 +80,46 @@ class SignupPage extends React.Component {
       700
     );
   }
+
+  signupEnterButtonClicked(event) {
+    event.preventDefault();
+    console.log("User signed up!");
+
+    // New user is created and saved into db once button is clicked
+    axios.post("/api/signup", {
+        name: document.getElementById("name").value,
+        userName: document.getElementById("userName").value,
+        password: document.getElementById("password").value,
+        about: document.getElementById("about").value,
+        birthday: document.getElementById("date").value
+      },
+      {
+        // gets header tokens once user logs
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      }
+    )
+    .then(response => {
+      console.log("Response!!!!!", response);
+     // save tokens in localstorage
+     // it is saved so it can be reused for other requests once user logs in
+     localStorage.setItem("token", response.data.token);
+     localStorage.setItem("name", response.data.name);
+     localStorage.setItem("userName", response.data.userName);
+     localStorage.setItem("birthday", response.data.birthday);
+     localStorage.setItem("about", response.data.about);
+          
+     // redirect to user's profile page
+     this.props.history.push({
+      pathname:"/profile-page"
+     });
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -115,18 +143,18 @@ class SignupPage extends React.Component {
             <GridContainer justify="center">
               <GridItem xs={12} sm={12} md={4}>
                 <Card className={classes[this.state.cardAnimaton]}>
-                  <form className={classes.form}>
                     <CardHeader color="primary" className={classes.cardHeader}>
                       <h4>Sign Up</h4>
                     </CardHeader>
                     <CardBody>
                       <CustomInput
-                        labelText="Name"
+                        labelText="First and Last Name"
                         id="name"
                         formControlProps={{
                           fullWidth: true
                         }}
                         inputProps={{
+                          value: "User Name",
                           type: "text",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -137,11 +165,12 @@ class SignupPage extends React.Component {
                       />
                       <CustomInput
                         labelText="User Name"
-                        id="username"
+                        id="userName"
                         formControlProps={{
                           fullWidth: true
                         }}
                         inputProps={{
+                          value: "user123",
                           type: "username",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -154,11 +183,12 @@ class SignupPage extends React.Component {
                       />
                       <CustomInput
                         labelText="Password"
-                        id="pass"
+                        id="password"
                         formControlProps={{
                           fullWidth: true
                         }}
                         inputProps={{
+                          value: "password",
                           type: "password",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -178,6 +208,7 @@ class SignupPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
+                          value: "About me",
                           type: "about",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -191,15 +222,11 @@ class SignupPage extends React.Component {
                       <DatePicker/>
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
-                      <Button simple color="primary" size="lg">
-                        <Link to='/profile-page' style={{ textDecoration: 'none' }} >
+                      <Button simple color="primary" size="lg" onClick={this.signupEnterButtonClicked.bind(this)}>
                         Get started
-                        </Link>
                       </Button>
                     </CardFooter>
-                    
-                  </form>
-                </Card>
+                 </Card>
               </GridItem>
             </GridContainer>
           </div>

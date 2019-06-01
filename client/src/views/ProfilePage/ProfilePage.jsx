@@ -38,7 +38,7 @@ import SearchBar from "components/SearchBar/SearchBar.jsx";
 import Search from "@material-ui/icons/Search";
 import ProductCard from "components/ProductCard/ProductCard.jsx"
 import WishesCard from "components/WishesCard/WishesCard.jsx";
-// import axios from 'axios';
+import axios from 'axios';
 
 // Profile page will show once user logs in
 
@@ -48,20 +48,22 @@ class ProfilePage extends React.Component {
     this.state = {
       mobileOpen: false,
       renderProducts: true,
-      wishCards: []
+      wishCards: [],
+      tabNumber: 0
     };
 
     // this.wishlistClick = this.wishlistClick.bind(this);
     // this.searchProductsClick = this.searchProductsClick.bind(this);
   }
-
-  componentDidUpdate(prevProps) {
-    console.log("zzzzzz", this.props);
-    if(this.props.location.items){
-      document.querySelectorAll("button[role=tab]")[2].click();
-    }
+  // commented out because there was an error/ loop when this is used
+  // componentDidUpdate(prevProps) {
+  //   console.log("Made a search!", this.props);
+  //   if(this.props.location.items){
+  //     document.querySelectorAll("button[role=tab]")[2].click();
+  //     this.setState({ tabNumber: 2 });
+  //   }
     
-  }
+  // }
 
   //**TRACY --- added another button that allows you to search products and render them */
   searchProductsClick = (e) => {
@@ -83,31 +85,36 @@ class ProfilePage extends React.Component {
     return UserBannerFriendsClick();
   };
 
-  // wishlistClick = (e) => {
-  //   e.preventDefault();
+  wishlistClick = (e) => {
+    e.preventDefault();
   
-  //   // Make a get request from UserLikes db in the UserId column which gets their liked items
-  //   // will be called in wishListClick
-  //   axios.get('api/userLikes', {
-  //     params: {
-  //       userId: ashKetchum.id
-  //     },
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token")
-  //     }
-  //   })
-  //   .then(response => {
-  //     console.log("Response!!!!!", response);
-  //     // using setState, we save the response in the state: wishCards state
-  //       this.setState({
-  //         wishCards: response.data
-  //       })
-  //   })
-  //   .catch(function (error) {
-  //       console.log(error);
-  //   })
+    // Make a get request from UserLikes db in the UserId column which gets their liked items
+    // will be called in wishListClick
+    axios.get('api/userLikes', {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    })
+    .then(response => {
+      console.log("Response!", response);
+      // using setState, we save the response in the state: wishCards state
+        this.setState({
+          wishCards: response.data
+        })
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
     
-  // };
+  };
+  // the tab number state is updated when clicked and when the function is called
+  // navpills will now know which tab is being clicked
+  m(tabNumber) {
+    console.log("Tab no. clicked: " , tabNumber);
+    this.setState({
+      tabNumber: tabNumber
+    })
+  }
 
 
   render() {
@@ -137,7 +144,6 @@ class ProfilePage extends React.Component {
       )
     })
 
-    //**TRACY --- this is where I saved the mapping of product card as a variable */
     let mapProductCards = items.map(item => {
       return (
         <ProductCard
@@ -174,7 +180,8 @@ class ProfilePage extends React.Component {
                       <img src={profile} alt="..." className={imageClasses} />
                     </div>
                     <div className={classes.name}>
-                      <h3 className={classes.title}>Christian Louboutin</h3>
+                    {/* User name displayed here. Props get passed through from DB*/}
+                      <h3 className={classes.title}>{localStorage.getItem("name")}</h3>
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                       </Button>
@@ -188,14 +195,12 @@ class ProfilePage extends React.Component {
                   </div>
                 </GridItem>
               </GridContainer>
+              {/* User birthday and about description displayed here. Props get passed through from DB */}
               <div className={classes.description}>
                 <h5>About Me</h5>
-                <h5>Birthday: 5/27/89 {this.props.birthday}</h5>
+                <h5>Birthday: {localStorage.getItem("birthday")}</h5>
                 <p>
-                  I love surfing the waves of San Diego, and I enjoying an
-                  amazing fish taco. I'm a huge hat collector; friends always
-                  gift me cool and nifty designs. T-shirts are always a great
-                  go-to as a gift.{" "}
+                {localStorage.getItem("about")}{" "}
                 </p>
               </div>
 
@@ -214,6 +219,9 @@ class ProfilePage extends React.Component {
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={12} className={classes.navWrapper}>
                   <NavPills
+                  // providing a callback in Navpills to inform which tab was clicked. 
+                  // check component/Navpills.jsx, the function is called there 
+                    tabChangeCallback= {this.m.bind(this)}
                     alignCenter
                     color="primary"
                     tabs={[
@@ -254,10 +262,8 @@ class ProfilePage extends React.Component {
                         tabButton: "Wish list",
                         tabIcon: Favorite,
                         tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              {mapWishlistCards}
-                            </GridItem>
+                          <GridContainer>
+                            {mapWishlistCards}
                           </GridContainer>
                         )
                       },

@@ -21,7 +21,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import loginPageStyle from "assets/jss/material-kit-react/views/loginPage.jsx";
 
 import image from "assets/img/bg7.jpg";
-// import axios from "axios";
+import axios from "axios";
 
 
 class LoginPage extends React.Component {
@@ -43,25 +43,40 @@ class LoginPage extends React.Component {
   }
 
   loginEnterButtonClicked(event) {
-    // this.setState({isLoading: true});
     event.preventDefault();
     console.log("User clicked Enter button!");
 
-    // axios.post("/api/login", {
-    //   params: {
-    //     userId: userName.id
-    //   },
-    //   headers: {
-    //     Authorization: "Bearer " + localStorage.getItem("token")
-    //   }
-
-    // })
-    // .then((response) => {
-    //   this.setState({ data: response.data, isLoading: false });
-    // })
-    // .catch((err) => {
-    //   this.setState({ data: err, isLoading: false });
-    // });
+    // make axios call to post username and password once button is clicked
+    axios.post("/api/login", {
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      },
+      {
+        // gets header tokens once user logs
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      }
+    )
+    .then(response => {
+      console.log("Response!!!!!", response);
+     // save tokens in localstorage
+     // it is saved so it can be reused for other requests once user logs in
+     localStorage.setItem("token", response.data.token);
+     localStorage.setItem("name", response.data.name);
+     localStorage.setItem("userName", response.data.userName);
+     localStorage.setItem("birthday", response.data.birthday);
+     localStorage.setItem("about", response.data.about);
+          
+     // redirect to user's profile page
+     this.props.history.push({
+      pathname:"/profile-page"
+     });
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+    
   }
 
   render() { 
@@ -129,6 +144,7 @@ class LoginPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
+                          value:"user123",
                           type: "text",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -144,6 +160,7 @@ class LoginPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
+                          value:"password",
                           type: "password",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -157,7 +174,7 @@ class LoginPage extends React.Component {
                     </CardBody>
                     <CardFooter className={classes.cardFooter}>
                     {/* Make an axios request to the login page*/}
-                      <Button simple color="primary" size="lg" onClick={this.loginEnterButtonClicked}>
+                      <Button simple color="primary" size="lg" onClick={this.loginEnterButtonClicked.bind(this)}>
                         Enter
                       </Button>
                     </CardFooter>

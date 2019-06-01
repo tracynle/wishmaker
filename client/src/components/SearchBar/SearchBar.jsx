@@ -64,6 +64,9 @@ class SearchBar extends React.Component {
         console.log("Enter was pressed!!");
         // Call the API to do the search to the server
         axios.get('/api/search/', {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          },
           params: {
             item: event.target.value
           }

@@ -13,8 +13,6 @@ import white from '@material-ui/core/colors/common';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-//import axios to pull from userlikes aka wishes likes database
-
 const styles = theme => ({
     card: {
         maxWidth: 250,
