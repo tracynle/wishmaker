@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
       }
     )
     .then(response => {
-      console.log("Response!!!!!", response);
+      console.log("User info and tokens retrieved after login: ", response);
      // save tokens in localstorage
      // it is saved so it can be reused for other requests once user logs in
      localStorage.setItem("token", response.data.token);
@@ -144,7 +144,7 @@ class LoginPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value:"user123",
+                          // value:"user123",
                           type: "text",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -160,7 +160,7 @@ class LoginPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value:"password",
+                          // value:"password",
                           type: "password",
                           endAdornment: (
                             <InputAdornment position="end">

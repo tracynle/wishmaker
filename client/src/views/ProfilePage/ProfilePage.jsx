@@ -109,12 +109,12 @@ class ProfilePage extends React.Component {
   };
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
-  m(tabNumber) {
-    console.log("Tab no. clicked: " , tabNumber);
-    this.setState({
-      tabNumber: tabNumber
-    })
-  }
+  // m(tabNumber) {
+  //   console.log("Tab no. clicked: " , tabNumber);
+  //   this.setState({
+  //     tabNumber: tabNumber
+  //   })
+  // }
 
 
   render() {
@@ -221,7 +221,7 @@ class ProfilePage extends React.Component {
                   <NavPills
                   // providing a callback in Navpills to inform which tab was clicked. 
                   // check component/Navpills.jsx, the function is called there 
-                    tabChangeCallback= {this.m.bind(this)}
+                    // tabChangeCallback= {this.m.bind(this)}
                     alignCenter
                     color="primary"
                     tabs={[
