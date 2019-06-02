@@ -27,7 +27,7 @@ class NavPills extends React.Component {
   handleChange = (event, active) => {
     this.setState({ active });
     // tabChangeCallback is called here, and active is referring to when the tab is clicked.
-    // this.props.tabChangeCallback(active);
+    this.props.tabChangeCallback(active);
   };
 
   handleChangeIndex = index => {

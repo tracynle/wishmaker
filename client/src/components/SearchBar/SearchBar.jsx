@@ -58,6 +58,7 @@ class SearchBar extends React.Component {
 
    // Will show what user is typing in console
     doSomethingWithSearchTerms(event) {
+      const searchInput = event.target.value;
       // condition for enter key
       if(event.keyCode === 13) {
         console.log(event.target.value);
@@ -80,7 +81,8 @@ class SearchBar extends React.Component {
           this.props.history.push({
             pathname:"/profile-page",
               // pass the state to the redirected page which is the user page
-            items: response.data.results
+            items: response.data.results,
+            searchTerm: searchInput
            });
         })
         .catch(function (error) {

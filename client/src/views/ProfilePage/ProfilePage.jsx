@@ -49,21 +49,34 @@ class ProfilePage extends React.Component {
       mobileOpen: false,
       renderProducts: true,
       wishCards: [],
-      tabNumber: 0
+      searchTerm: ""
+      // tabNumber: 0,
+      // clickedTab: false
     };
 
     // this.wishlistClick = this.wishlistClick.bind(this);
     // this.searchProductsClick = this.searchProductsClick.bind(this);
   }
   // commented out because there was an error/ loop when this is used
-  // componentDidUpdate(prevProps) {
-  //   console.log("Made a search!", this.props);
-  //   if(this.props.location.items){
-  //     document.querySelectorAll("button[role=tab]")[2].click();
-  //     this.setState({ tabNumber: 2 });
-  //   }
+  componentDidUpdate(prevProps, prevState) {
+    // let switchTab = true;
+    // // check if current tab is true and if prev tab is false or not
+    // if(this.state.clickedTab === true && prevState.clickedTab === false) {
+    //   // if user clicked on a tab which means it's true, then we don't intentionally switch to the search tab
+    //   switchTab = false;
+    //   this.setState({ clickedTab: false });
+    // }
+
+    console.log("Tab clicked!", this.props);
+    // if switchTab is true it will switch to search tab
+    // if true, then run this function to go to tab no.2
+    // if (switchTab === true && this.props.location.items){
+    if (this.props.location.searchTerm !== this.state.searchTerm && this.props.location.items) {
+      document.querySelectorAll("button[role=tab]")[2].click();
+      this.setState({ searchTerm: this.props.location.searchTerm });
+    }
     
-  // }
+  }
 
   //**TRACY --- added another button that allows you to search products and render them */
   searchProductsClick = (e) => {
@@ -109,14 +122,15 @@ class ProfilePage extends React.Component {
   };
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
-  // m(tabNumber) {
-  //   console.log("Tab no. clicked: " , tabNumber);
-  //   this.setState({
-  //     tabNumber: tabNumber
-  //   })
-  // }
+  m(tabNumber) {
+    console.log("Tab no. clicked: " , tabNumber);
+    // this.setState({
+    //   tabNumber: tabNumber,
+    //   // clickedTab: true
+    // })
+  }
 
-
+  
   render() {
     const { classes, ...rest } = this.props;
     const imageClasses = classNames(
@@ -221,7 +235,7 @@ class ProfilePage extends React.Component {
                   <NavPills
                   // providing a callback in Navpills to inform which tab was clicked. 
                   // check component/Navpills.jsx, the function is called there 
-                    // tabChangeCallback= {this.m.bind(this)}
+                    tabChangeCallback= {this.m.bind(this)}
                     alignCenter
                     color="primary"
                     tabs={[
@@ -230,30 +244,7 @@ class ProfilePage extends React.Component {
                         tabIcon: Camera,
                         tabContent: (
                           <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={6}>
-                              <img
-                                alt="..."
-                                src={studio1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio2}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={6}>
-                              <img
-                                alt="..."
-                                src={studio5}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio4}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
+                            
                           </GridContainer>
                         )
                       },
@@ -264,6 +255,7 @@ class ProfilePage extends React.Component {
                         tabContent: (
                           <GridContainer>
                             {mapWishlistCards}
+                            
                           </GridContainer>
                         )
                       },
