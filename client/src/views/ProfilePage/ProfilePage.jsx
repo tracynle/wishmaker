@@ -20,11 +20,11 @@ import Parallax from "components/Parallax/Parallax.jsx";
 
 import profile from "assets/img/faces/christian.jpg";
 
-import studio1 from "assets/img/examples/studio-1.jpg";
-import studio2 from "assets/img/examples/studio-2.jpg";
+// import studio1 from "assets/img/examples/studio-1.jpg";
+// import studio2 from "assets/img/examples/studio-2.jpg";
 // import studio3 from "assets/img/examples/studio-3.jpg";
-import studio4 from "assets/img/examples/studio-4.jpg";
-import studio5 from "assets/img/examples/studio-5.jpg";
+// import studio4 from "assets/img/examples/studio-4.jpg";
+// import studio5 from "assets/img/examples/studio-5.jpg";
 // import work1 from "assets/img/examples/olu-eletu.jpg";
 // import work2 from "assets/img/examples/clem-onojeghuo.jpg";
 // import work3 from "assets/img/examples/cynthia-del-rio.jpg";
@@ -98,9 +98,7 @@ class ProfilePage extends React.Component {
     return UserBannerFriendsClick();
   };
 
-  wishlistClick = (e) => {
-    e.preventDefault();
-  
+  getWishList = (e) => {  
     // Make a get request from UserLikes db in the UserId column which gets their liked items
     // will be called in wishListClick
     axios.get('api/userLikes', {
@@ -120,14 +118,42 @@ class ProfilePage extends React.Component {
     })
     
   };
+  // getFriendsList = (e) => {  
+  //   // Make a get request from UserLikes db in the UserId column which gets their liked items
+  //   // will be called in wishListClick
+  //   axios.get('api/friends', {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token")
+  //     }
+  //   })
+  //   .then(response => {
+  //     console.log("Response!", response);
+  //     // using setState, we save the response in the state: wishCards state
+  //       this.setState({
+  //         friendsCard: response.data
+  //       })
+  //   })
+  //   .catch(function (error) {
+  //       console.log(error);
+  //   })
+    
+  // };
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
-  m(tabNumber) {
+  onTabClicked(tabNumber) {
     console.log("Tab no. clicked: " , tabNumber);
     // this.setState({
     //   tabNumber: tabNumber,
     //   // clickedTab: true
     // })
+    // tab no. 0 will get friends list
+    if (tabNumber === 0) {
+      // get friends from db
+    }
+    if (tabNumber === 1) {
+      // get wishes from db
+      this.getWishList();
+    }
   }
 
   
@@ -235,7 +261,7 @@ class ProfilePage extends React.Component {
                   <NavPills
                   // providing a callback in Navpills to inform which tab was clicked. 
                   // check component/Navpills.jsx, the function is called there 
-                    tabChangeCallback= {this.m.bind(this)}
+                    tabChangeCallback= {this.onTabClicked.bind(this)}
                     alignCenter
                     color="primary"
                     tabs={[
