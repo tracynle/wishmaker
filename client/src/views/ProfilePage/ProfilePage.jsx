@@ -43,32 +43,32 @@ import axios from 'axios';
 
 
 // Test Array with all friends **CREATE LOGIC THAT PULLS ACTUALL FRIEND DATA AND SAVES IT IN AN ARRAY LIKE THIS**
-let AllFriends = [
-  {
-    friendId: '1',
-    image: 'http://static.next-episode.net/tv-shows-images/huge/the-flash.jpg',
-    name: 'Barry Allen',
-    birthday: '07/29/1993',
-  },
-  {
-    friendId: '2',
-    image: 'https://andrewpinkham.files.wordpress.com/2015/02/arrow-arrow-cw-35030076-1920-1200.jpg',
-    name: 'Oliver Queen',
-    birthday: '05/16/1985',
-  },
-  {
-    friendId: '3',
-    image: 'https://art-s.nflximg.net/6f16c/9ad779b7e89aaa1fdc7c7f7c59ba684d04a6f16c.jpg',
-    name: 'Kara Zor-el',
-    birthday: '09/22/1975',
-  },
-  {
-    friendId: '4',
-    image: 'http://www.hdwallpapers.in/download/batman_in_the_dark_knight_rises-1366x768.jpg',
-    name: 'Bruce Wayne',
-    birthday: '05/27/1983',
-  },
-];
+// let AllFriends = [
+//   {
+//     friendId: '1',
+//     image: 'http://static.next-episode.net/tv-shows-images/huge/the-flash.jpg',
+//     name: 'Barry Allen',
+//     birthday: '07/29/1993',
+//   },
+//   {
+//     friendId: '2',
+//     image: 'https://andrewpinkham.files.wordpress.com/2015/02/arrow-arrow-cw-35030076-1920-1200.jpg',
+//     name: 'Oliver Queen',
+//     birthday: '05/16/1985',
+//   },
+//   {
+//     friendId: '3',
+//     image: 'https://art-s.nflximg.net/6f16c/9ad779b7e89aaa1fdc7c7f7c59ba684d04a6f16c.jpg',
+//     name: 'Kara Zor-el',
+//     birthday: '09/22/1975',
+//   },
+//   {
+//     friendId: '4',
+//     image: 'http://www.hdwallpapers.in/download/batman_in_the_dark_knight_rises-1366x768.jpg',
+//     name: 'Bruce Wayne',
+//     birthday: '05/27/1983',
+//   },
+// ];
 
 
 
@@ -81,7 +81,8 @@ class ProfilePage extends React.Component {
       mobileOpen: false,
       renderProducts: true,
       wishCards: [],
-      searchTerm: ""
+      searchTerm: "",
+      friends: []
       // tabNumber: 0,
       // clickedTab: false
     };
@@ -110,6 +111,10 @@ class ProfilePage extends React.Component {
 
   }
 
+  componentDidMount(){
+    this.getFriendsList();
+  }
+
   //**TRACY --- added another button that allows you to search products and render them */
   searchProductsClick = (e) => {
     e.preventDefault();
@@ -121,14 +126,14 @@ class ProfilePage extends React.Component {
     }
   };
 
-  friendsClick = (e) => {
-    e.preventDefault();
-    function UserBannerFriendsClick() {
-      //Input logic that will route to the users list of friends
-      return console.log("Going to my list of Friends");
-    }
-    return UserBannerFriendsClick();
-  };
+  // friendsClick = (e) => {
+  //   e.preventDefault();
+  //   function UserBannerFriendsClick() {
+  //     //Input logic that will route to the users list of friends
+  //     return console.log("Going to my list of Friends");
+  //   }
+  //   return UserBannerFriendsClick();
+  // };
 
   getWishList = (e) => {
     // Make a get request from UserLikes db in the UserId column which gets their liked items
@@ -150,26 +155,29 @@ class ProfilePage extends React.Component {
       })
 
   };
-  // getFriendsList = (e) => {  
-  //   // Make a get request from UserLikes db in the UserId column which gets their liked items
-  //   // will be called in wishListClick
-  //   axios.get('api/friends', {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token")
-  //     }
-  //   })
-  //   .then(response => {
-  //     console.log("Response!", response);
-  //     // using setState, we save the response in the state: wishCards state
-  //       this.setState({
-  //         friendsCard: response.data
-  //       })
-  //   })
-  //   .catch(function (error) {
-  //       console.log(error);
-  //   })
+  getFriendsList = (e) => {  
+    // Make a get request from UserLikes db in the UserId column which gets their liked items
+    // will be called in wishListClick
+    axios.get('api/getFriends', {
+      params: {
+        id: localStorage.getItem("id")
+      },
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    })
+    .then(response => {
+      console.log("Response!", response);
+      // using setState, we save the response in the state: wishCards state
+        this.setState({
+          friends: response.data
+        })
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
 
-  // };
+  };
   
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
@@ -182,6 +190,7 @@ class ProfilePage extends React.Component {
     // tab no. 0 will get friends list
     if (tabNumber === 0) {
       // get friends from db
+      this.getFriendsList();
     }
     if (tabNumber === 1) {
       // get wishes from db
@@ -228,6 +237,17 @@ class ProfilePage extends React.Component {
         />
       )
     });
+
+    let mapFriendsCard = this.state.friends.map(friend => {
+      return (
+        <FriendsCardFinal
+          id={friend.id}
+          name={friend.name}
+          birthday={friend.birthday}
+          about={friend.about}
+        />
+      )
+    })
 
     return (
       <div>
@@ -303,19 +323,7 @@ class ProfilePage extends React.Component {
                         tabIcon: Camera,
                         tabContent: (
                           <GridContainer justify="center" spacing={3}>
-                            {
-                              //go to the top to find the variable 'AllFriends'
-                              AllFriends.map(thisCouldBeAnything => {
-                                return (
-                                  <FriendsCardFinal
-                                    id={thisCouldBeAnything.friendId}
-                                    image={thisCouldBeAnything.image}
-                                    name={thisCouldBeAnything.name}
-                                    birthday={thisCouldBeAnything.birthday}
-                                  />
-                                )
-                              })
-                            }
+                            {mapFriendsCard}
                           </GridContainer>
                         )
                       },
@@ -326,7 +334,6 @@ class ProfilePage extends React.Component {
                         tabContent: (
                           <GridContainer>
                             {mapWishlistCards}
-
                           </GridContainer>
                         )
                       },

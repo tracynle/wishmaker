@@ -63,6 +63,7 @@ class LoginPage extends React.Component {
      // save tokens in localstorage
      // it is saved so it can be reused for other requests once user logs in
      localStorage.setItem("token", response.data.token);
+     localStorage.setItem("id", response.data.id);
      localStorage.setItem("name", response.data.name);
      localStorage.setItem("userName", response.data.userName);
      localStorage.setItem("birthday", response.data.birthday);

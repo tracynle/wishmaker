@@ -122,8 +122,8 @@ module.exports = function(app) {
   // ---- Create new friendship > Add to db (CREATE)
   app.post("/api/friends", function(req, res, next) {
     console.log("FRIENDSHIP MADE");
-    console.log(req.body);
-    console.log(Object.keys(db.Users));
+    // console.log(req.body);
+    // console.log(Object.keys(db.Users));
     //db.tableName.create(req.body).then(function(dbName) {});
     db.Users.findOne({
       where: {
@@ -136,15 +136,31 @@ module.exports = function(app) {
         }
       })
       .then(function(User2) {
-        console.log("ADDING USERS")
-        console.log(User1.addFriend1);
-        console.log(User1.addFriend2);
+        console.log("ADDING USERS ======")
+        console.log(User1.constructor.prototype);
+
         User1.addFriend1(User2);
         res.json({});
       })
     });
   });
 
+  app.get("/api/getFriends", function(req, res, next) {
+    db.Users.findOne({
+      where: {
+        id: req.query.id
+      }
+    }).then(function(User1) {
+      User1.getFriend1().then(function(friends){
+        let friendsNoPassword = friends.map(friend => {
+          delete friend.dataValues.password;
+          return friend;
+        });
+        // console.log("These are my friends: ", friendsNoPassword);
+        res.json(friendsNoPassword);
+      })
+    });
+  })
   // =============================================== //
   // ------ Etsy Api Results route -------
   app.get("/api/search/", function(req, res, next){
