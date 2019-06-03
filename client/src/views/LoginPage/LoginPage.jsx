@@ -144,7 +144,7 @@ class LoginPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value:"batman",
+                          value:"superGirl",
                           type: "text",
                           endAdornment: (
                             <InputAdornment position="end">
