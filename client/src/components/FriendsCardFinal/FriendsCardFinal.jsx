@@ -5,9 +5,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import GridContainer from "components/Grid/GridContainer.jsx";
+// import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import ProfilePage from '../../views/ProfilePage/ProfilePage.jsx';
+// import ProfilePage from '../../views/ProfilePage/ProfilePage.jsx';
 
 //This will hold the styles for this component
 const FriendsStyles = () => ({

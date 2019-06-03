@@ -197,7 +197,7 @@ class ProfilePage extends React.Component {
       classes.imgRoundedCircle,
       classes.imgFluid
     );
-    const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
+    // const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
 
     // To check if the items are available, if not set it to an empty array
     // location is provided by router dom which means the variable items is checking 
