@@ -11,7 +11,7 @@ module.exports = {
   },
   "test": {
     "username": "root",
-    "password": "Ngoc513*",
+    "password": process.env.MYSQL_PASS,
     "database": "database_test",
     "host": "127.0.0.1",
     "port": 3306,

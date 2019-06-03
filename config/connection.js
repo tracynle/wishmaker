@@ -13,7 +13,7 @@ if (process.env.JAWS_DB_URL) {
         port: 3306,
         host: 'localhost',
         user: 'root',
-        password: 'Ngoc513*',
+        password: process.env.MYSQL_PASS,
         database: 'wishmaker_db'
     })
 };
