@@ -37,8 +37,40 @@ import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.js
 import SearchBar from "components/SearchBar/SearchBar.jsx";
 import Search from "@material-ui/icons/Search";
 import ProductCard from "components/ProductCard/ProductCard.jsx"
+import FriendsCardFinal from 'components/FriendsCardFinal/FriendsCardFinal.jsx';
 import WishesCard from "components/WishesCard/WishesCard.jsx";
 import axios from 'axios';
+
+
+// Test Array with all friends **CREATE LOGIC THAT PULLS ACTUALL FRIEND DATA AND SAVES IT IN AN ARRAY LIKE THIS**
+let AllFriends = [
+  {
+    friendId: '1',
+    image: 'http://static.next-episode.net/tv-shows-images/huge/the-flash.jpg',
+    name: 'Barry Allen',
+    birthday: '07/29/1993',
+  },
+  {
+    friendId: '2',
+    image: 'https://andrewpinkham.files.wordpress.com/2015/02/arrow-arrow-cw-35030076-1920-1200.jpg',
+    name: 'Oliver Queen',
+    birthday: '05/16/1985',
+  },
+  {
+    friendId: '3',
+    image: 'https://art-s.nflximg.net/6f16c/9ad779b7e89aaa1fdc7c7f7c59ba684d04a6f16c.jpg',
+    name: 'Kara Zor-el',
+    birthday: '09/22/1975',
+  },
+  {
+    friendId: '4',
+    image: 'http://www.hdwallpapers.in/download/batman_in_the_dark_knight_rises-1366x768.jpg',
+    name: 'Bruce Wayne',
+    birthday: '05/27/1983',
+  },
+];
+
+
 
 // Profile page will show once user logs in
 
@@ -75,7 +107,7 @@ class ProfilePage extends React.Component {
       document.querySelectorAll("button[role=tab]")[2].click();
       this.setState({ searchTerm: this.props.location.searchTerm });
     }
-    
+
   }
 
   //**TRACY --- added another button that allows you to search products and render them */
@@ -98,7 +130,7 @@ class ProfilePage extends React.Component {
     return UserBannerFriendsClick();
   };
 
-  getWishList = (e) => {  
+  getWishList = (e) => {
     // Make a get request from UserLikes db in the UserId column which gets their liked items
     // will be called in wishListClick
     axios.get('api/userLikes', {
@@ -106,17 +138,17 @@ class ProfilePage extends React.Component {
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     })
-    .then(response => {
-      console.log("Response!", response);
-      // using setState, we save the response in the state: wishCards state
+      .then(response => {
+        console.log("Response!", response);
+        // using setState, we save the response in the state: wishCards state
         this.setState({
           wishCards: response.data
         })
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
         console.log(error);
-    })
-    
+      })
+
   };
   // getFriendsList = (e) => {  
   //   // Make a get request from UserLikes db in the UserId column which gets their liked items
@@ -136,13 +168,13 @@ class ProfilePage extends React.Component {
   //   .catch(function (error) {
   //       console.log(error);
   //   })
-    
+
   // };
   
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
   onTabClicked(tabNumber) {
-    console.log("Tab no. clicked: " , tabNumber);
+    console.log("Tab no. clicked: ", tabNumber);
     // this.setState({
     //   tabNumber: tabNumber,
     //   // clickedTab: true
@@ -157,7 +189,7 @@ class ProfilePage extends React.Component {
     }
   }
 
-  
+
   render() {
     const { classes, ...rest } = this.props;
     const imageClasses = classNames(
@@ -172,10 +204,10 @@ class ProfilePage extends React.Component {
     // for the redirected route and the items passed with the redirect 
     // otherwise it will be put in an empty array
     const items = this.props.location.items ? this.props.location.items : [];
-    
+
     let mapWishlistCards = this.state.wishCards.map(item => {
       return (
-        <WishesCard 
+        <WishesCard
           key={item.id}
           title={item.title}
           image={item.imageUrl}
@@ -196,7 +228,7 @@ class ProfilePage extends React.Component {
         />
       )
     });
-    
+
     return (
       <div>
         <Header
@@ -221,7 +253,7 @@ class ProfilePage extends React.Component {
                       <img src={profile} alt="..." className={imageClasses} />
                     </div>
                     <div className={classes.name}>
-                    {/* User name displayed here. Props get passed through from DB*/}
+                      {/* User name displayed here. Props get passed through from DB*/}
                       <h3 className={classes.title}>{localStorage.getItem("name")}</h3>
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
@@ -241,7 +273,7 @@ class ProfilePage extends React.Component {
                 <h5>About Me</h5>
                 <h5>Birthday: {localStorage.getItem("birthday")}</h5>
                 <p>
-                {localStorage.getItem("about")}{" "}
+                  {localStorage.getItem("about")}{" "}
                 </p>
               </div>
 
@@ -260,9 +292,9 @@ class ProfilePage extends React.Component {
               <GridContainer justify="center">
                 <GridItem xs={12} sm={12} md={12} className={classes.navWrapper}>
                   <NavPills
-                  // providing a callback in Navpills to inform which tab was clicked. 
-                  // check component/Navpills.jsx, the function is called there 
-                    tabChangeCallback= {this.onTabClicked.bind(this)}
+                    // providing a callback in Navpills to inform which tab was clicked. 
+                    // check component/Navpills.jsx, the function is called there 
+                    tabChangeCallback={this.onTabClicked.bind(this)}
                     alignCenter
                     color="primary"
                     tabs={[
@@ -270,8 +302,20 @@ class ProfilePage extends React.Component {
                         tabButton: "Friends",
                         tabIcon: Camera,
                         tabContent: (
-                          <GridContainer justify="center">
-                            
+                          <GridContainer justify="center" spacing={3}>
+                            {
+                              //go to the top to find the variable 'AllFriends'
+                              AllFriends.map(thisCouldBeAnything => {
+                                return (
+                                  <FriendsCardFinal
+                                    id={thisCouldBeAnything.friendId}
+                                    image={thisCouldBeAnything.image}
+                                    name={thisCouldBeAnything.name}
+                                    birthday={thisCouldBeAnything.birthday}
+                                  />
+                                )
+                              })
+                            }
                           </GridContainer>
                         )
                       },
@@ -282,7 +326,7 @@ class ProfilePage extends React.Component {
                         tabContent: (
                           <GridContainer>
                             {mapWishlistCards}
-                            
+
                           </GridContainer>
                         )
                       },
@@ -296,7 +340,7 @@ class ProfilePage extends React.Component {
                           </GridContainer>
                         )
                       }
-            
+
                     ]}
                   />
                 </GridItem>
