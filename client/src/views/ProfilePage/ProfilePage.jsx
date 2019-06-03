@@ -138,6 +138,7 @@ class ProfilePage extends React.Component {
   //   })
     
   // };
+  
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
   onTabClicked(tabNumber) {
