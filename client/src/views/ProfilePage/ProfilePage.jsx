@@ -16,7 +16,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import NavPills from "components/NavPills/NavPills.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
-// import profile from "assets/img/faces/blankavatar.jpg";
+import defaultImage from "assets/img/faces/blankavatar.jpg";
 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 // import InputBase from "@material-ui/core/InputBase";
@@ -182,12 +182,20 @@ class ProfilePage extends React.Component {
       // get friends from db
       this.getNonFriendsList();
     }
-    else if (tabNumber === 2) {
+    else if (tabNumber === 3) {
       // get wishes from db
       this.getWishList();
     }
   }
 
+  imageForNewUser(){
+    if (localStorage.getItem("image") === undefined) {
+      return defaultImage;
+    }
+    else {
+      localStorage.getItem("image");
+    }
+  }
 
   render() {
     const { classes, ...rest } = this.props;
@@ -282,7 +290,7 @@ class ProfilePage extends React.Component {
                 <GridItem xs={12} sm={12} md={6}>
                   <div className={classes.profile}>
                     <div>
-                      <img src={localStorage.getItem("image")} alt="..." className={imageClasses}/>
+                      <img src={localStorage.getItem("image")}  alt="..." className={imageClasses}/>
                     </div>
                     <div className={classes.name}>
                       {/* User name displayed here. Props get passed through from DB*/}

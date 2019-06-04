@@ -109,10 +109,11 @@ class SignupPage extends React.Component {
      localStorage.setItem("userName", response.data.userName);
      localStorage.setItem("birthday", response.data.birthday);
      localStorage.setItem("about", response.data.about);
+     localStorage.setItem("image", response.data.image);
           
      // redirect to user's profile page
      this.props.history.push({
-      pathname:"/profile-page"
+      pathname:"/login-page"
      });
     })
     .catch(function (error) {
