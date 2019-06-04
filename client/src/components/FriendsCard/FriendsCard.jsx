@@ -104,7 +104,7 @@ class FriendsCard extends Component {
       // Friends
       if (index == -1) {
         friendButton = 
-          <Button variant="outlined" classes={classes.button} onClick={this.addFriendButton} >
+          <Button color="primary" variant="outlined" classes={classes.button} onClick={this.addFriendButton} >
             Add Friend
           </Button>;
       }
@@ -137,7 +137,7 @@ class FriendsCard extends Component {
               </Typography>
             </div>
             <div className={classes.friendFlexCenter}>
-              <Button variant="outlined" classes={classes.button} onClick={this.getUserInfo} >
+              <Button variant="outlined" color="primary" classes={classes.button} onClick={this.getUserInfo} >
                 Profile
               </Button>
               {friendButton}

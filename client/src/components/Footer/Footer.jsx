@@ -25,7 +25,7 @@ function Footer({ ...props }) {
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.center}>
-          &copy; {1900 + new Date().getYear()} created by{" "}
+          &copy; {1900 + new Date().getYear()}
           {" "}
         </div>
       </div>
