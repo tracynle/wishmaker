@@ -86,6 +86,7 @@ class ProductCard extends Component {
       console.log("THIS IS TITLE " + this.props.title);
       console.log("THIS IS PRICE " + this.props.price);
       console.log("THIS IS DESCRIP " + this.props.description);
+
       axios.post("/api/userLikes/", {
         //taking the current product cards information to post to the UserLikes table for it to later render in the wishlist spot
         imageUrl: this.state.image,
@@ -94,7 +95,6 @@ class ProductCard extends Component {
         description: this.props.description,
       }, 
       {
-
         // gets user's token and any requests they make, it is saved to the user's 
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token")
@@ -129,7 +129,6 @@ class ProductCard extends Component {
 
   // Make an Ajax call to retrieve Etsy's images
   // Images will be rendered onto User's page
-
   componentDidMount = () => {
     axios.get('/api/images', {
       params: {

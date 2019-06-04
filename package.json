@@ -9,6 +9,7 @@
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "if-env": "^1.0.4",
+    "material-ui-flat-pagination": "^3.2.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
     "oauth2orize": "^1.11.0",

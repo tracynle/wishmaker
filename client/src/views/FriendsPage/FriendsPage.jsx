@@ -34,15 +34,13 @@ import profile from "assets/img/faces/blankavatar.jpg";
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 // import InputBase from "@material-ui/core/InputBase";
 
-import SearchBar from "components/SearchBar/SearchBar.jsx";
-import Search from "@material-ui/icons/Search";
-import ProductCard from "components/ProductCard/ProductCard.jsx"
+// import SearchBar from "components/SearchBar/SearchBar.jsx";
+// import Search from "@material-ui/icons/Search";
+// import ProductCard from "components/ProductCard/ProductCard.jsx"
 import FriendsCard from 'components/FriendsCard/FriendsCard.jsx';
 import WishesCard from "components/WishesCard/WishesCard.jsx";
-import axios from 'axios';
+// import axios from 'axios';
 
-// import Pagination from "components/Pagination/Pagination.jsx";
-import Pagination from "material-ui-flat-pagination";
 
 // Test Array with all friends **CREATE LOGIC THAT PULLS ACTUALL FRIEND DATA AND SAVES IT IN AN ARRAY LIKE THIS**
 // let AllFriends = [
@@ -72,9 +70,24 @@ import Pagination from "material-ui-flat-pagination";
 //   },
 // ];
 
+/*
+To reroute to friends profile page
+- events:
+  - when profile button is clicked, reroute to friend's page (like how searchbar reroutes to profilepage)
+  - axios call to friend's page and states/data will be updated
+    - On clicking the friend card you redirect friend info to profile page
+    - You aren't touching the token in local storage
+    - pass friend info to friend profile page by redirecting it
+    - Then in profile page u access friend info by (examples) this.props.location.friend.name and ...friend.about
+  */
+
+
+
 // Profile page will show once user logs in
 
 class ProfilePage extends React.Component {
+  
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -82,94 +95,17 @@ class ProfilePage extends React.Component {
       renderProducts: true,
       wishCards: [],
       searchTerm: "",
-      friends: [],
-      offset: 0
+      user: {}
     };
   }
 
-  handleClick(offset) {
-    this.setState({ offset });
-  }
-
-  
-  // commented out because there was an error/ loop when this is used
-  componentDidUpdate(prevProps, prevState) {   
-    console.log("Tab function", this.props);
-    if (this.props.location.searchTerm !== this.state.searchTerm && this.props.location.items) {
-      document.querySelectorAll("button[role=tab]")[2].click();
-      this.setState({ searchTerm: this.props.location.searchTerm });
-    }
-  }
-  
-  // friendCards/ friends list gets rendered
-  componentDidMount(){
-    this.getFriendsList();
-  }
-  
-  getWishList = (e) => {
-    // Make a get request from UserLikes db in the UserId column which gets their liked items
-    // will be called in wishListClick
-    axios.get('api/userLikes', {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    })
-      .then(response => {
-        console.log("User likes: ", response);
-        // using setState, we save the response in the state: wishCards state
-        this.setState({
-          wishCards: response.data
-        })
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-
-  };
-
-  getFriendsList = (e) => {  
-    // Make a get request to friends db 
-    axios.get('api/getUserInfo', {
-      params: {
-        id: localStorage.getItem("id")
-      },
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    })
-    .then(response => {
-      console.log("Getting friends: ", response);
-      // using setState, we save the response in the state: friends state
-        this.setState({
-          friends: response.data.friends
-        })
-        localStorage.setItem("friends", response.data.friends.map (friend => {
-          return friend.userName;
-        })
-        .join()
-        )
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
-
-  };
-  
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
   onTabClicked(tabNumber) {
     console.log("Tab no. clicked: ", tabNumber);
     // tab no. 0 will get friends list
-    if (tabNumber === 0) {
-      // get friends from db
-      this.getFriendsList();
-    }
-    if (tabNumber === 1) {
-      // get wishes from db
-      this.getWishList();
-    }
-  }
 
+  }
 
   render() {
     const { classes, ...rest } = this.props;
@@ -178,16 +114,14 @@ class ProfilePage extends React.Component {
       classes.imgRoundedCircle,
       classes.imgFluid
     );
-
     // const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
 
     // To check if the items are available, if not set it to an empty array
     // location is provided by router dom which means the variable items is checking 
     // for the redirected route and the items passed with the redirect 
     // otherwise it will be put in an empty array
-    const items = this.props.location.items ? this.props.location.items : [];
 
-    let mapWishlistCards = this.state.wishCards.map(item => {
+    let mapWishlistCards = this.props.location.user.wishes.map(item => {
       return (
         <WishesCard
           key={item.id}
@@ -199,19 +133,7 @@ class ProfilePage extends React.Component {
       )
     })
 
-    let mapProductCards = items.map(item => {
-      return (
-        <ProductCard
-          key={item.listing_id}
-          listing_id={item.listing_id}
-          title={item.title}
-          price={item.price}
-          description={item.description}
-        />
-      )
-    });
-
-    let mapFriendsCard = this.state.friends.map(friend => {
+    let mapFriendsCard = this.props.location.user.friends.map(friend => {
       return (
         <FriendsCard
           key={friend.id}
@@ -220,7 +142,8 @@ class ProfilePage extends React.Component {
           birthday={friend.birthday}
           about={friend.about}
           history={this.props.history}
-          checkFriends={false}
+          userName={friend.userName}
+          checkFriends={true}
         />
       )
     })
@@ -250,7 +173,7 @@ class ProfilePage extends React.Component {
                     </div>
                     <div className={classes.name}>
                       {/* User name displayed here. Props get passed through from DB*/}
-                      <h3 className={classes.title}>{localStorage.getItem("name")}</h3>
+                      <h3 className={classes.title}>{this.props.location.user.name}</h3>
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                       </Button>
@@ -267,21 +190,12 @@ class ProfilePage extends React.Component {
               {/* User birthday and about description displayed here. Props get passed through from DB */}
               <div className={classes.description}>
                 <h5>About Me</h5>
-                <h5>Birthday: {localStorage.getItem("birthday")}</h5>
+                <h5>Birthday: {this.props.location.user.birthday}</h5>
                 <p>
-                  {localStorage.getItem("about")}{" "}
+                  {this.props.location.user.about}{" "}
                 </p>
               </div>
 
-
-              {/* SEARCH BAR */}
-              <GridContainer justify="center">
-                <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
-                  <div className={classes.container} justify="center">
-                    <SearchBar history={this.props.history} />
-                  </div>
-                </GridItem>
-              </GridContainer>
 
               {/* TABS SECTION */}
               <GridContainer justify="center">
@@ -297,7 +211,7 @@ class ProfilePage extends React.Component {
                         tabButton: "Friends",
                         tabIcon: Camera,
                         tabContent: (
-                          <GridContainer justify="center" spacing={3} >
+                          <GridContainer justify="center" spacing={3}>
                             {mapFriendsCard}
                           </GridContainer>
                         )
@@ -311,23 +225,8 @@ class ProfilePage extends React.Component {
                             {mapWishlistCards}
                           </GridContainer>
                         )
-                      },
-                      {
-                        // SEARCH RESULTS RENDER
-                        tabButton: "Search",
-                        tabIcon: Search,
-                        tabContent: (
-                          <GridContainer>
-                            {mapProductCards}
-                            <Pagination
-                              limit={10}
-                              offset={this.state.offset}
-                              total={100}
-                              onClick={(e, offset) => this.handleClick(offset)}
-                            />
-                          </GridContainer>
-                        )
                       }
+              
 
                     ]}
                   />
@@ -341,4 +240,5 @@ class ProfilePage extends React.Component {
     );
   }
 }
+
 export default withStyles(profilePageStyle)(ProfilePage);

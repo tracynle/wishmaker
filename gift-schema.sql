@@ -18,7 +18,7 @@ VALUES ('Barry Allen', 'flash', 'password', '07/29/1993', now(), now(), 'I move 
 
 INSERT  INTO Users
 (name, userName, password, birthday, createdAt, updatedAt, about)
-VALUES ('Oliver Queen', 'greenArrow ', 'password', '05/16/1985', now(), now(), 'Green is my favorite color, if you can not tell.');
+VALUES ('Oliver Queen', 'greenArrow', 'password', '05/16/1985', now(), now(), 'Green is my favorite color, if you can not tell.');
 
 INSERT  INTO Users
 (name, userName, password, birthday, createdAt, updatedAt, about)
@@ -30,8 +30,11 @@ VALUES ('Bruce Wayne', 'batman', 'password', '05/27/1983', now(), now(), 'It is 
 
 
 
+SELECT * FROM Users;
 SELECT * FROM UserLikes;
 
 SELECT * FROM friends;
 
--- DELETE FROM UserLikes;
+DELETE FROM UserLikes;
+DELETE FROM Users;
+DELETE FROM friends;

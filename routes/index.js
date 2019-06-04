@@ -130,22 +130,28 @@ module.exports = function(app) {
         id: req.body.UserId1
       }
     }).then(function(User1) {
-      db.Users.findOne({
-        where: {
-          id: req.body.UserId2
-        }
-      })
-      .then(function(User2) {
-        console.log("ADDING USERS ======")
-        console.log(User1.constructor.prototype);
+      passport.authenticate('bearer', {}, function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.redirect('/login-page'); }
+  
+        console.log("FFFFFF authenticated the user:")
+        // console.log(user);
+        db.Users.findOne({
+          where: {
+            id: user.id
+          }
+        })
+        .then(function(User2) {
+          console.log("ADDING USERS ======")
 
-        User1.addFriend1(User2);
-        res.json({});
-      })
+          User1.addFriend2(User2);
+          res.json({});
+        })
+      })(req, res, next);
     });
   });
 
-  app.get("/api/getFriends", function(req, res, next) {
+  app.get("/api/getUserInfo", function(req, res, next) {
     db.Users.findOne({
       where: {
         id: req.query.id
@@ -157,10 +163,19 @@ module.exports = function(app) {
           return friend;
         });
         // console.log("These are my friends: ", friendsNoPassword);
-        res.json(friendsNoPassword);
+        User1.dataValues.friends = friendsNoPassword;
+        
+        User1.getUserLikes().then(function(wishes){
+          User1.dataValues.wishes = wishes;
+          console.log("zzzzzz",User1.getUserLikes());
+          res.json(User1);
+
+        })
       })
     });
   })
+
+
   // =============================================== //
   // ------ Etsy Api Results route -------
   app.get("/api/search/", function(req, res, next){
