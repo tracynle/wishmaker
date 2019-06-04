@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import GridItem from "components/Grid/GridItem.jsx";
 // import ProfilePage from '../../views/ProfilePage/ProfilePage.jsx';
 import axios from 'axios';
-import image from "assets/img/faces/blankavatar.jpg";
+// import image from "assets/img/faces/blankavatar.jpg";
 
 //This will hold the styles for this component
 const FriendsStyles = () => ({
@@ -103,13 +103,19 @@ class FriendsCard extends Component {
       let index = localStorage.getItem("friends").split(",").indexOf(this.props.userName);
       // Friends
       if (index == -1) {
-        friendButton = <Button variant="outlined" classes={classes.button} onClick={this.addFriendButton} >
-                          Add Friend
-                       </Button>;
+        friendButton = 
+          <Button variant="outlined" classes={classes.button} onClick={this.addFriendButton} >
+            Add Friend
+          </Button>;
       }
-      console.log(index);
-      console.log(this.props.userName);
-      console.log(localStorage.getItem("friends").split(","));
+      else if (this.props.hideIfAlreadyFriend) {
+        console.log('blawhoiej;foaiwjef');
+        return null;
+      }
+
+      // console.log(index);
+      // console.log(this.props.userName);
+      // console.log(localStorage.getItem("friends").split(","));
     }
 
     return (
@@ -117,7 +123,7 @@ class FriendsCard extends Component {
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={image}
+            image={this.props.image}
           />
           <CardContent>
             <div className={classes.friendFlexCenter}>

@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     userName: DataTypes.STRING,
     password: DataTypes.STRING,
     birthday: DataTypes.STRING,
-    about: DataTypes.STRING
+    about: DataTypes.STRING,
+    image: DataTypes.STRING
   });
 
   Users.associate = function(models) {

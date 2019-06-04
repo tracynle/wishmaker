@@ -4,10 +4,8 @@ import classNames from "classnames";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
-import Camera from "@material-ui/icons/Camera";
-// import Palette from "@material-ui/icons/Palette";
+import People from "@material-ui/icons/People";
 import Favorite from "@material-ui/icons/Favorite";
-// import SearchIcon from "@material-ui/icons/Search";
 // core components
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -18,18 +16,7 @@ import HeaderLinks from "components/Header/HeaderLinks.jsx";
 import NavPills from "components/NavPills/NavPills.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
 
-import profile from "assets/img/faces/blankavatar.jpg";
-
-// import studio1 from "assets/img/examples/studio-1.jpg";
-// import studio2 from "assets/img/examples/studio-2.jpg";
-// import studio3 from "assets/img/examples/studio-3.jpg";
-// import studio4 from "assets/img/examples/studio-4.jpg";
-// import studio5 from "assets/img/examples/studio-5.jpg";
-// import work1 from "assets/img/examples/olu-eletu.jpg";
-// import work2 from "assets/img/examples/clem-onojeghuo.jpg";
-// import work3 from "assets/img/examples/cynthia-del-rio.jpg";
-// import work4 from "assets/img/examples/mariya-georgieva.jpg";
-// import work5 from "assets/img/examples/clem-onojegaw.jpg";
+// import profile from "assets/img/faces/blankavatar.jpg";
 
 import profilePageStyle from "assets/jss/material-kit-react/views/profilePage.jsx";
 // import InputBase from "@material-ui/core/InputBase";
@@ -83,6 +70,7 @@ class ProfilePage extends React.Component {
       wishCards: [],
       searchTerm: "",
       friends: [],
+      nonFriends: [],
       offset: 0
     };
   }
@@ -154,7 +142,33 @@ class ProfilePage extends React.Component {
     })
 
   };
-  
+
+  getNonFriendsList = (e) => {  
+    // Make a get request to friends db 
+    axios.get('api/user', {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    })
+    .then(response => {
+      console.log("Getting non friends: ", response);
+      // using setState, we save the response in the state: friends state
+        let nonFriends = [];
+        for (const nonFriend of response.data) {
+          if (nonFriend.userName !== localStorage.getItem("userName")) {
+            nonFriends.push(nonFriend);
+          }
+        }
+        this.setState({
+          nonFriends: nonFriends
+        })
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+
+  };
+
   // the tab number state is updated when clicked and when the function is called
   // navpills will now know which tab is being clicked
   onTabClicked(tabNumber) {
@@ -164,7 +178,11 @@ class ProfilePage extends React.Component {
       // get friends from db
       this.getFriendsList();
     }
-    if (tabNumber === 1) {
+    else if (tabNumber === 1) {
+      // get friends from db
+      this.getNonFriendsList();
+    }
+    else if (tabNumber === 2) {
       // get wishes from db
       this.getWishList();
     }
@@ -221,6 +239,24 @@ class ProfilePage extends React.Component {
           about={friend.about}
           history={this.props.history}
           checkFriends={false}
+          image={friend.image}
+        />
+      )
+    })
+
+    let mapNonFriendsCard = this.state.nonFriends.map(friend => {
+      return (
+        <FriendsCard
+          key={friend.id}
+          id={friend.id}
+          name={friend.name}
+          birthday={friend.birthday}
+          about={friend.about}
+          history={this.props.history}
+          checkFriends={true}
+          hideIfAlreadyFriend={true}
+          userName={friend.userName}
+          image={friend.image}
         />
       )
     })
@@ -246,7 +282,7 @@ class ProfilePage extends React.Component {
                 <GridItem xs={12} sm={12} md={6}>
                   <div className={classes.profile}>
                     <div>
-                      <img src={profile} alt="..." className={imageClasses} />
+                      <img src={localStorage.getItem("image")} alt="..." className={imageClasses}/>
                     </div>
                     <div className={classes.name}>
                       {/* User name displayed here. Props get passed through from DB*/}
@@ -294,8 +330,8 @@ class ProfilePage extends React.Component {
                     color="primary"
                     tabs={[
                       {
-                        tabButton: "Friends",
-                        tabIcon: Camera,
+                        tabButton: "My Friends",
+                        tabIcon: People,
                         tabContent: (
                           <GridContainer justify="center" spacing={3} >
                             {mapFriendsCard}
@@ -303,8 +339,17 @@ class ProfilePage extends React.Component {
                         )
                       },
                       {
+                        tabButton: "Suggested Friends",
+                        tabIcon: People,
+                        tabContent: (
+                          <GridContainer justify="center" spacing={3} >
+                            {mapNonFriendsCard}
+                          </GridContainer>
+                        )
+                      },
+                      {
                         // WISH LIST SAVED
-                        tabButton: "Wish list",
+                        tabButton: "Wish List",
                         tabIcon: Favorite,
                         tabContent: (
                           <GridContainer>
@@ -314,7 +359,7 @@ class ProfilePage extends React.Component {
                       },
                       {
                         // SEARCH RESULTS RENDER
-                        tabButton: "Search",
+                        tabButton: "Products",
                         tabIcon: Search,
                         tabContent: (
                           <GridContainer>

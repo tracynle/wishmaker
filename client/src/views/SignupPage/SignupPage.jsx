@@ -154,7 +154,6 @@ class SignupPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value: "User Name",
                           type: "text",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -170,7 +169,6 @@ class SignupPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value: "user123",
                           type: "username",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -188,7 +186,6 @@ class SignupPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value: "password",
                           type: "password",
                           endAdornment: (
                             <InputAdornment position="end">
@@ -208,7 +205,6 @@ class SignupPage extends React.Component {
                           fullWidth: true
                         }}
                         inputProps={{
-                          value: "About me",
                           type: "about",
                           endAdornment: (
                             <InputAdornment position="end">
