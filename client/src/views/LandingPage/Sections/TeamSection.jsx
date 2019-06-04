@@ -41,10 +41,7 @@ class TeamSection extends React.Component {
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+              
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -66,14 +63,13 @@ class TeamSection extends React.Component {
                     color="transparent"
                     className={classes.margin5}
                   >
+                    <a
+                      href="https://www.linkedin.com/in/tracyngocle/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                     <i className={classes.socials + " fab fa-linkedin"} />
-                  </Button>
-                  <Button
-                    justIcon
-                    color="transparent"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-facebook"} />
+                    </a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -89,10 +85,7 @@ class TeamSection extends React.Component {
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+                
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -114,14 +107,13 @@ class TeamSection extends React.Component {
                     color="transparent"
                     className={classes.margin5}
                   >
+                    <a
+                      href="https://www.linkedin.com/in/matthew-caro-619sd/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                     <i className={classes.socials + " fab fa-linkedin"} />
-                  </Button>
-                  <Button
-                    justIcon
-                    color="transparent"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-facebook"} />
+                    </a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -137,10 +129,7 @@ class TeamSection extends React.Component {
                 </h4>
                 <CardBody>
                   <p className={classes.description}>
-                    You can write here details about one of your team members.
-                    You can give more details about what they do. Feel free to
-                    add some <a href="#pablo">links</a> for people to be able to
-                    follow them outside the site.
+                   
                   </p>
                 </CardBody>
                 <CardFooter className={classes.justifyCenter}>
@@ -156,20 +145,6 @@ class TeamSection extends React.Component {
                     >
                       <i className={classes.socials + " fab fa-github"} />
                     </a>
-                  </Button>
-                  <Button
-                    justIcon
-                    color="transparent"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-linkedin"} />
-                  </Button>
-                  <Button
-                    justIcon
-                    color="transparent"
-                    className={classes.margin5}
-                  >
-                    <i className={classes.socials + " fab fa-facebook"} />
                   </Button>
                 </CardFooter>
               </Card>

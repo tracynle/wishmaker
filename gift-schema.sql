@@ -37,6 +37,8 @@ SELECT * FROM friends;
 DELETE FROM friends;
 DELETE FROM UserLikes;
 
+
+
 UPDATE Users set image = 'http://www.hdwallpapers.in/download/spiderman_artwork_4k-wide.jpg' WHERE id = 11;
 UPDATE Users set image = 'http://static.next-episode.net/tv-shows-images/huge/the-flash.jpg' WHERE id = 12;
 UPDATE Users set image = 'https://andrewpinkham.files.wordpress.com/2015/02/arrow-arrow-cw-35030076-1920-1200.jpg' WHERE id = 13;
