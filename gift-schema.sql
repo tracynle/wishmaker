@@ -37,9 +37,9 @@ SELECT * FROM friends;
 
 -- DELETE FROM UserLikes;
 
-UPDATE Users set image = 'http://www.hdwallpapers.in/download/spiderman_artwork_4k-wide.jpg' WHERE id = 17;
-UPDATE Users set image = 'http://static.next-episode.net/tv-shows-images/huge/the-flash.jpg' WHERE id = 18;
-UPDATE Users set image = 'https://andrewpinkham.files.wordpress.com/2015/02/arrow-arrow-cw-35030076-1920-1200.jpg' WHERE id = 19;
-UPDATE Users set image = 'https://art-s.nflximg.net/6f16c/9ad779b7e89aaa1fdc7c7f7c59ba684d04a6f16c.jpg' WHERE id = 20;
-UPDATE Users set image = 'http://www.hdwallpapers.in/download/batman_in_the_dark_knight_rises-1366x768.jpg' WHERE id = 21;
+UPDATE Users set image = 'http://www.hdwallpapers.in/download/spiderman_artwork_4k-wide.jpg' WHERE id = 11;
+UPDATE Users set image = 'http://static.next-episode.net/tv-shows-images/huge/the-flash.jpg' WHERE id = 12;
+UPDATE Users set image = 'https://andrewpinkham.files.wordpress.com/2015/02/arrow-arrow-cw-35030076-1920-1200.jpg' WHERE id = 13;
+UPDATE Users set image = 'https://art-s.nflximg.net/6f16c/9ad779b7e89aaa1fdc7c7f7c59ba684d04a6f16c.jpg' WHERE id = 14;
+UPDATE Users set image = 'http://www.hdwallpapers.in/download/batman_in_the_dark_knight_rises-1366x768.jpg' WHERE id = 16;
 

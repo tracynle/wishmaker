@@ -182,7 +182,7 @@ class ProfilePage extends React.Component {
       // get friends from db
       this.getNonFriendsList();
     }
-    else if (tabNumber === 3) {
+    else if (tabNumber === 2) {
       // get wishes from db
       this.getWishList();
     }
@@ -356,28 +356,27 @@ class ProfilePage extends React.Component {
                         )
                       },
                       {
-                        // WISH LIST SAVED
-                        tabButton: "Wish List",
-                        tabIcon: Favorite,
-                        tabContent: (
-                          <GridContainer>
-                            {mapWishlistCards}
-                          </GridContainer>
-                        )
-                      },
-                      {
                         // SEARCH RESULTS RENDER
                         tabButton: "Products",
                         tabIcon: Search,
                         tabContent: (
                           <GridContainer>
                             {mapProductCards}
-                            <Pagination
+                            {/* <Pagination
                               limit={10}
                               offset={this.state.offset}
                               total={100}
                               onClick={(e, offset) => this.handleClick(offset)}
-                            />
+                            /> */}
+                          </GridContainer>
+                        )
+                      },{
+                        // WISH LIST SAVED
+                        tabButton: "Wish List",
+                        tabIcon: Favorite,
+                        tabContent: (
+                          <GridContainer>
+                            {mapWishlistCards}
                           </GridContainer>
                         )
                       }
